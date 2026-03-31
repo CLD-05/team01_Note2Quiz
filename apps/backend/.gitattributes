@@ -1,0 +1,13 @@
+# Handle line endings automatically for files detected as text 
+# and leave binary files untouched.
+* text=auto
+
+# 구체적인 파일 실행 권한 및 줄바꿈 유지
+/mvnw text eol=lf
+*.cmd text eol=crlf
+
+# 소스 코드 및 설정 파일은 명시적으로 LF 사용 권장 (선택 사항)
+*.java text eol=lf
+*.xml text eol=lf
+*.yml text eol=lf
+*.properties text eol=lf
