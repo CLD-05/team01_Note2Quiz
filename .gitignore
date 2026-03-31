@@ -1,24 +1,123 @@
-# Compiled class file
-*.class
+# =========================
+# 1. 보안 & 민감 정보 (가장 중요 🚨)
+# =========================
+# AI API Key, DB 비밀번호, JWT 시크릿 키 등이 포함된 설정 파일
+.env
+.env.*
+*.local
+application-secret.yml
+application-secret.properties
+application-dev.yml
 
-# Log file
+# =========================
+# 2. Frontend (React)
+# =========================
+# 의존성 패키지 (용량이 매우 큼)
+node_modules/
+/frontend/node_modules/
+
+# 빌드 결과물
+build/
+dist/
+/frontend/build/
+/frontend/dist/
+
+# 패키지 매니저 로그
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# 3. Backend (Spring Boot / Java)
+# =========================
+# 컴파일된 클래스 및 빌드 결과물
+*.class
+/build/
+/backend/build/
+/target/
+/backend/target/
+
+# Gradle 설정
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+!gradlew
+!gradlew.bat
+
+# 로그 파일
 *.log
 
-# BlueJ files
-*.ctxt
+# 패키지 파일 (필요 시 주석 해제)
+# *.jar
+# *.war
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# =========================
+# 4. Docker & DB
+# =========================
+# 로컬 DB 테스트용 볼륨 마운트 폴더 (MySQL 데이터가 깃허브에 올라가는 것 방지)
+mysql_data/
+.db/
+docker-compose.override.yml
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+# =========================
+# 5. IDE (개발 도구) & OS 설정 파일
+# =========================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# VS Code
+.vscode/
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# OS (Mac, Windows)
+.DS_Store
+Thumbs.db
+
+# =========================================
+# 🚨 Note2Quiz 추가 필수: 보안 및 환경 변수 (매우 중요)
+# =========================================
+# AI API Key, DB 비밀번호 등이 포함된 환경 변수 파일
+.env
+.env.*
+*.local
+application-secret.yml
+application-secret.properties
+application-dev.yml
+
+# =========================================
+# 🚨 Note2Quiz 추가 필수: Frontend (React / Node.js)
+# =========================================
+# 프론트엔드 의존성 파일 (이걸 안 막으면 수만 개의 파일이 깃허브에 올라갑니다)
+node_modules/
+/frontend/node_modules/
+
+# 프론트엔드 빌드 결과물
+dist/
+/frontend/dist/
+/frontend/build/
+
+# 패키지 매니저 에러 로그
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================================
+# 추가 권장: IntelliJ IDEA 및 Docker
+# =========================================
+# Spring Boot 개발 시 IntelliJ를 쓴다면 필수
+.idea/
+*.iml
+*.iws
+
+# 로컬 DB 테스트용 Docker 볼륨 마운트 폴더
+mysql_data/
+.db/
