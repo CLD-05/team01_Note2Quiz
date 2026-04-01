@@ -1,0 +1,220 @@
+<html lang="ko" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Note2Quiz - 노트 목록</title>
+    
+    <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" vid="5">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web" vid="6"></script>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="7"></script>
+    <script vid="8">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2D68FF',
+                        sidebar: '#111827', 
+                        sidebarHover: '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <style vid="9">
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #F9FAFB;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5E7EB;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D1D5DB;
+        }
+    </style>
+</head>
+<body class="w-screen h-screen overflow-hidden flex text-gray-900" vid="10">
+
+    <aside class="w-[280px] bg-sidebar text-gray-300 flex flex-col h-full flex-shrink-0 border-r border-gray-800" vid="11">
+        <div class="h-20 flex items-center px-6 border-b border-gray-800" vid="12">
+            <div class="flex items-center gap-2 text-white" vid="13">
+                <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center" vid="14">
+                    <i class="ph-bold ph-brain text-xl text-white" vid="15"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight" vid="16">Note2Quiz</span>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-1" vid="17">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-sidebarHover hover:text-white transition-colors group text-sm font-medium" vid="18">
+                <i class="ph ph-squares-four text-lg text-gray-400 group-hover:text-white transition-colors" vid="19"></i>
+                Create
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white transition-colors group text-sm font-medium shadow-sm" vid="20">
+                <i class="ph ph-notebook text-lg text-white" vid="21"></i>
+                Notes
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-sidebarHover hover:text-white transition-colors group text-sm font-medium" vid="22">
+                <i class="ph ph-clock-counter-clockwise text-lg text-gray-400 group-hover:text-white transition-colors" vid="23"></i>
+                Quizzes
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-sidebarHover hover:text-white transition-colors group text-sm font-medium" vid="24">
+                <i class="ph ph-gear text-lg text-gray-400 group-hover:text-white transition-colors" vid="25"></i>
+                Settings
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800" vid="26">
+            <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-sidebarHover cursor-pointer transition-colors" vid="27">
+                <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-medium text-sm" vid="28">
+                    S
+                </div>
+                <div class="flex-1 min-w-0" vid="29">
+                    <p class="text-sm font-medium text-white truncate" vid="30">수험생_01</p>
+                    <p class="text-xs text-gray-500 truncate" vid="31">student@nexai.com</p>
+                </div>
+                <i class="ph ph-caret-up text-gray-400" vid="32"></i>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-[#F9FAFB]" vid="33">
+        <header class="h-24 px-10 flex items-center justify-between flex-shrink-0 border-b border-gray-200/60 bg-white/50 backdrop-blur-sm" vid="34">
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight" vid="35">Notes</h1>
+            <div class="flex items-center gap-4" vid="36">
+                <div class="relative group" vid="37">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none" vid="38">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg group-focus-within:text-primary transition-colors" vid="39"></i>
+                    </div>
+                    <input type="text" placeholder="노트 검색..." class="w-72 pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm" vid="40">
+                </div>
+                <button class="text-gray-600 hover:text-red-600 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors flex items-center gap-1.5" vid="41">
+                    <i class="ph ph-trash text-lg" vid="42"></i>
+                    노트 삭제하기
+                </button>
+                <button class="bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors flex items-center gap-2 shadow-sm" vid="43">
+                    <i class="ph-bold ph-plus" vid="44"></i>
+                    새 노트 추가
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto px-10 py-8" vid="45">
+            <div class="max-w-[1200px]" vid="46">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" vid="47">
+                    
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:border-primary/30 group" vid="48">
+                        <div class="flex items-start justify-between gap-2 mb-2" vid="49">
+                            <h3 class="text-base font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2 flex-1" vid="50">
+                                Docker 아키텍처 및 핵심 개념 정리
+                            </h3>
+                            <div class="flex items-center gap-1.5 flex-shrink-0" vid="51">
+                                <span class="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded" vid="52">1,200자</span>
+                                <span class="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded" vid="53">24문제</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed" vid="54">
+                            도커 엔진의 구조, 이미지 레이어링 시스템 및 컨테이너 라이프사이클에 대한 상세 강의 노트...
+                        </p>
+                        <div class="mt-auto pt-3 border-t border-gray-100 flex items-center gap-1.5 text-xs text-gray-400" vid="55">
+                            <i class="ph ph-calendar-blank" vid="56"></i>
+                            <span vid="57">2026.03.28</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:border-primary/30 group" vid="58">
+                        <div class="flex items-start justify-between gap-2 mb-2" vid="59">
+                            <h3 class="text-base font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2 flex-1" vid="60">
+                                AWS 클라우드 디자인 패턴
+                            </h3>
+                            <div class="flex items-center gap-1.5 flex-shrink-0" vid="61">
+                                <span class="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded" vid="62">850자</span>
+                                <span class="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded" vid="63">18문제</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed" vid="64">
+                            고가용성 아키텍처를 위한 Multi-AZ 배치 및 로드 밸런싱 전략 요약...
+                        </p>
+                        <div class="mt-auto pt-3 border-t border-gray-100 flex items-center gap-1.5 text-xs text-gray-400" vid="65">
+                            <i class="ph ph-calendar-blank" vid="66"></i>
+                            <span vid="67">2026.03.27</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:border-primary/30 group" vid="68">
+                        <div class="flex items-start justify-between gap-2 mb-2" vid="69">
+                            <h3 class="text-base font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2 flex-1" vid="70">
+                                Linux 시스템 보안 설정 가이드
+                            </h3>
+                            <div class="flex items-center gap-1.5 flex-shrink-0" vid="71">
+                                <span class="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded" vid="72">2,400자</span>
+                                <span class="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded" vid="73">32문제</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed" vid="74">
+                            사용자 권한 관리(sudoers), SSH 보안 강화 및 방화벽 설정(ufw) 관련 스크립트 모음...
+                        </p>
+                        <div class="mt-auto pt-3 border-t border-gray-100 flex items-center gap-1.5 text-xs text-gray-400" vid="75">
+                            <i class="ph ph-calendar-blank" vid="76"></i>
+                            <span vid="77">2026.03.25</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:border-primary/30 group" vid="78">
+                        <div class="flex items-start justify-between gap-2 mb-2" vid="79">
+                            <h3 class="text-base font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2 flex-1" vid="80">
+                                Kubernetes CNI 및 오버레이 네트워크
+                            </h3>
+                            <div class="flex items-center gap-1.5 flex-shrink-0" vid="81">
+                                <span class="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded" vid="82">1,500자</span>
+                                <span class="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded" vid="83">15문제</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed" vid="84">
+                            Flannel과 Calico의 차이점, 파드 간 통신 프로토콜 및 서비스 메시 기초...
+                        </p>
+                        <div class="mt-auto pt-3 border-t border-gray-100 flex items-center gap-1.5 text-xs text-gray-400" vid="85">
+                            <i class="ph ph-calendar-blank" vid="86"></i>
+                            <span vid="87">2026.03.22</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:border-primary/30 group" vid="88">
+                        <div class="flex items-start justify-between gap-2 mb-2" vid="89">
+                            <h3 class="text-base font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2 flex-1" vid="90">
+                                HTTP/2 vs HTTP/3 성능 비교
+                            </h3>
+                            <div class="flex items-center gap-1.5 flex-shrink-0" vid="91">
+                                <span class="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded" vid="92">980자</span>
+                                <span class="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded" vid="93">12문제</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed" vid="94">
+                            TCP HOL 블로킹 문제와 QUIC 프로토콜의 도입 배경에 관한 기술 문서 요약...
+                        </p>
+                        <div class="mt-auto pt-3 border-t border-gray-100 flex items-center gap-1.5 text-xs text-gray-400" vid="95">
+                            <i class="ph ph-calendar-blank" vid="96"></i>
+                            <span vid="97">2026.03.20</span>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </main>
+
+</body></html>
