@@ -1,9 +1,9 @@
 spring:
-  application:
-    name: backend
-
-  profiles:
-    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/note2quiz?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: scott
+    password: tiger
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -12,10 +12,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    # 1. 뷰 렌더링 시 쿼리 실행 경고 제거 (선택사항)
+    open-in-view: false
 
-  jackson:
-    property-naming-strategy: LOWER_CAMEL_CASE
-    time-zone: Asia/Seoul
+  # 2. 여기에 보안 관련 설정을 추가합니다!
+  security:
+    user:
+      name: user # 기본 유저 이름을 명시적으로 지정
+  
+  # 3. 만약 계속 임시비번이 뜬다면 아래 자동설정 제외 코드를 추가하세요.
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
 
-server:
-  port: 8080
