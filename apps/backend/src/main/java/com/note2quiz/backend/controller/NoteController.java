@@ -1,6 +1,6 @@
 package com.note2quiz.backend.controller;
 
-import com.note2quiz.backend.dto.NoteResponseDTO;
+import com.note2quiz.backend.dto.NoteResponse;
 import com.note2quiz.backend.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +15,18 @@ public class NoteController {
     private final NoteService noteService;
 
     @GetMapping
-    public ResponseEntity<List<NoteResponseDTO>> getNoteList(@RequestParam Long userId) {
-        List<NoteResponseDTO> notes = noteService.getMyNotes(userId);
+    public ResponseEntity<List<NoteResponse>> getNoteList(@RequestParam Long userId) {
+        List<NoteResponse> notes = noteService.getMyNotes(userId);
         return ResponseEntity.ok(notes);
     }
     
     
     @GetMapping("/{noteId}")
-    public ResponseEntity<NoteResponseDTO> getNoteDetail(
+    public ResponseEntity<NoteResponse> getNoteDetail(
             @PathVariable Long noteId, 
             @RequestParam Long userId) {
 
-        NoteResponseDTO response = noteService.getNoteDetail(noteId, userId);
+        NoteResponse response = noteService.getNoteDetail(noteId, userId);
         return ResponseEntity.ok(response);
     }
     

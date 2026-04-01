@@ -7,17 +7,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NoteResponseDTO {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class NoteResponse {
 
     private Long id;
     private String title;
     private String content;
     private LocalDateTime createdAt;
     private Integer quizSetCount;
+    private Integer wordCount;
+    private String preview;
 }

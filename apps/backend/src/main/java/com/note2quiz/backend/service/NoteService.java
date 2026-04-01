@@ -1,6 +1,6 @@
 package com.note2quiz.backend.service;
 
-import com.note2quiz.backend.dto.NoteResponseDTO;
+import com.note2quiz.backend.dto.NoteResponse;
 import com.note2quiz.backend.entity.Note;
 import com.note2quiz.backend.repository.NoteRepository;
 
@@ -19,25 +19,38 @@ import java.util.stream.Collectors;
 public class NoteService {
     private final NoteRepository noteRepository;
 
+    // 노트 목록 조회
     @Transactional(readOnly = true)
-    public List<NoteResponseDTO> getMyNotes(Long userId) {
+    public List<NoteResponse> getMyNotes(Long userId) {
         
     	List<Note> notes = noteRepository.findByUserIdOrderByCreatedAtDesc(userId);
         
     	
         return notes.stream()
-                .map(note -> NoteResponseDTO.builder()
-                        .id(note.getId())
-                        .title(note.getTitle())
-                        .createdAt(note.getCreatedAt())
-                        .quizSetCount(0)
-                        .build())
+        		.map(note -> {
+                    String content = note.getContent() != null ? note.getContent() : "";
+                    int wordCount = content.length();
+                    
+                    String preview = content.length() > 20 
+                                     ? content.substring(0, 20) + "..." 
+                                     : content;
+
+                    return NoteResponse.builder()
+                            .id(note.getId())
+                            .title(note.getTitle())
+                            .createdAt(note.getCreatedAt())
+                            .quizSetCount(0) 
+                            .wordCount(wordCount) 
+                            .preview(preview)     
+                            .build();
+                })
                 .collect(Collectors.toList());
     }
     
     
+    // 노트 상세 조회
     @Transactional(readOnly = true)
-    public NoteResponseDTO getNoteDetail(Long noteId, Long userId) {
+    public NoteResponse getNoteDetail(Long noteId, Long userId) {
         
         Note note = noteRepository.findById(noteId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 노트를 찾을 수 없습니다."));
@@ -48,7 +61,7 @@ public class NoteService {
         }
 
         
-        return NoteResponseDTO.builder()
+        return NoteResponse.builder()
                 .id(note.getId())
                 .title(note.getTitle())
                 .content(note.getContent())
@@ -57,6 +70,7 @@ public class NoteService {
     }
     
     
+    // 노트 삭제
     @Transactional
     public void deleteNote(Long noteId, Long userId) {
         Note note = noteRepository.findById(noteId)
