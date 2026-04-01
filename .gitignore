@@ -1,6 +1,16 @@
 # =========================
 # 1. 보안 & 민감 정보 (가장 중요 🚨)
 # =========================
+.metadata/
+.plugins/
+.lock
+*.log
+bin/
+target/
+.project
+.classpath
+.settings/
+apps/backend/.metadata/
 # AI API Key, DB 비밀번호, JWT 시크릿 키 등이 포함된 설정 파일
 .env
 .env.*
