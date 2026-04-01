@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -12,9 +13,8 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    // 테스트용 키 (실제로는 보안을 위해 환경변수에 저장해야 합니다)
     private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final long validityInMilliseconds = 3600000; // 1시간 유지
+    private final long validityInMilliseconds = 3600000; // 1시간
 
     // 1. 토큰 생성
     public String createToken(String email) {
@@ -30,7 +30,27 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // 2. 토큰에서 이메일 꺼내기
+    // 2. 쿠키 객체 생성 (핵심 추가!)
+    public ResponseCookie createCookie(String accessToken) {
+        return ResponseCookie.from("accessToken", accessToken)
+                .httpOnly(true)                // 자바스크립트 접근 불가 (XSS 방지)
+                .secure(false)                 // 운영 환경(HTTPS)에서는 true로 설정
+                .path("/")                     // 모든 경로에서 쿠키 전송
+                .maxAge(validityInMilliseconds / 1000) // 초 단위 설정
+                .sameSite("Lax")               // CSRF 방지
+                .build();
+    }
+
+    // 3. 로그아웃용 빈 쿠키 생성
+    public ResponseCookie createEmptyCookie() {
+        return ResponseCookie.from("accessToken", "")
+                .httpOnly(true)
+                .path("/")
+                .maxAge(0) // 즉시 만료
+                .build();
+    }
+
+    // 4. 토큰에서 이메일 꺼내기
     public String getEmail(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -40,7 +60,7 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-    // 3. 토큰 유효성 검사
+    // 5. 토큰 유효성 검사
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
