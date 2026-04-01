@@ -1,9 +1,14 @@
+import { FileText } from '@phosphor-icons/react';
+
 export default function NoteDetailPage() {
   return (
-    <div>
-      <h1 className="mb-2 text-2xl font-bold">노트 상세</h1>
-      <p className="text-gray-500">참고 시안: note.html</p>
-      <p className="mt-4 text-sm text-gray-400">이 페이지는 placeholder입니다.</p>
+    <div className="flex flex-col items-center justify-center py-20 text-center">
+      <div className="mb-4 rounded-2xl bg-primary-light p-4">
+        <FileText size={32} className="text-primary" />
+      </div>
+      <h3 className="mb-2 text-lg font-bold text-slate-800">노트 상세</h3>
+      <p className="text-sm text-slate-400">참고 시안: note.html</p>
+      <p className="mt-1 text-sm text-slate-400">이 페이지는 placeholder입니다.</p>
     </div>
   );
 }

@@ -1,28 +1,14 @@
-import { useState } from 'react';
-import client from '../api/client';
+import { Notebook } from '@phosphor-icons/react';
 
 export default function NotesPage() {
-  const [response, setResponse] = useState('');
-
-  const handleTest = async () => {
-    try {
-      const res = await client.get('/test');
-      setResponse(res.data);
-    } catch (err) {
-      setResponse('요청 실패: ' + err.message);
-    }
-  };
-
   return (
-    <div>
-      <h1 className="mb-2 text-2xl font-bold">노트 목록</h1>
-      <p className="text-gray-500">참고 시안: notes.html</p>
-      <p className="mt-4 text-sm text-gray-400">이 페이지는 placeholder입니다.</p>
-
-      <button onClick={handleTest} className="bg-primary text-white px-6 py-2 rounded-lg">
-        API 연결 테스트
-      </button>
-      {response && <p className="text-lg">{response}</p>}
+    <div className="flex flex-col items-center justify-center py-20 text-center">
+      <div className="mb-4 rounded-2xl bg-primary-light p-4">
+        <Notebook size={32} className="text-primary" />
+      </div>
+      <h3 className="mb-2 text-lg font-bold text-slate-800">노트 목록</h3>
+      <p className="text-sm text-slate-400">참고 시안: notes.html</p>
+      <p className="mt-1 text-sm text-slate-400">이 페이지는 placeholder입니다.</p>
     </div>
   );
 }
