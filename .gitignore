@@ -82,3 +82,5 @@ apps/.metadata/
 # OS (Mac, Windows)
 .DS_Store
 Thumbs.db
+
+.metadata/ 
