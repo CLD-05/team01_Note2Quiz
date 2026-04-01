@@ -21,7 +21,7 @@ public class NoteResponse {
     private String title;
     private String content;
     private LocalDateTime createdAt;
-    private Integer quizSetCount;
+    private Integer quizCount;
     private Integer wordCount;
     private String preview;
 }

@@ -39,7 +39,7 @@ public class NoteService {
                             .id(note.getId())
                             .title(note.getTitle())
                             .createdAt(note.getCreatedAt())
-                            .quizSetCount(0) 
+                            .quizCount(0) 
                             .wordCount(wordCount) 
                             .preview(preview)     
                             .build();
