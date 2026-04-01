@@ -43,7 +43,7 @@ public class NoteService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 노트를 찾을 수 없습니다."));
 
         
-        if (!note.getUser().getId().equals(userId)) {
+        if (!note.getUserId().equals(userId)) {
             throw new IllegalStateException("본인의 노트 조회할 수 있는 권한이 있습니다.");
         }
 
@@ -54,5 +54,18 @@ public class NoteService {
                 .content(note.getContent())
                 .createdAt(note.getCreatedAt())
                 .build();
+    }
+    
+    
+    @Transactional
+    public void deleteNote(Long noteId, Long userId) {
+        Note note = noteRepository.findById(noteId)
+                .orElseThrow(() -> new IllegalArgumentException("삭제할 노트를 찾을 수 없습니다."));
+
+        if (!note.getUserId().equals(userId)) {
+            throw new IllegalStateException("본인의 노트만 삭제할 수 있습니다.");
+        }
+
+        noteRepository.delete(note);
     }
 }

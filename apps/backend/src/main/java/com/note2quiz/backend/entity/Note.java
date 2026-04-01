@@ -12,6 +12,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "notes")
 @Getter 
@@ -26,7 +29,10 @@ public class Note {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private TempUser user;
+//    private User user;
+    
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
     
     @Column(length = 200, nullable = false)
     private String title;
@@ -42,4 +48,9 @@ public class Note {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    // 퀴즈셋 개발 완료 시 주석 제거 예정
+//    @Builder.Default 
+//    @OneToMany(mappedBy = "note", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<QuizSet> quizSets = new ArrayList<>();
 }
