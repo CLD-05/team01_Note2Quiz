@@ -10,6 +10,7 @@ import NoteDetailPage from './pages/NoteDetailPage';
 import NoteCreatePage from './pages/NoteCreatePage';
 import QuizzesPage from './pages/QuizzesPage';
 import QuizPlayPage from './pages/QuizPlayPage';
+import QuizResultPage from './pages/QuizResultPage';
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="notes/:noteId" element={<NoteDetailPage />} />
             <Route path="quizzes" element={<QuizzesPage />} />
             <Route path="quizzes/:quizSetId" element={<QuizPlayPage />} />
+            <Route path="quizzes/:quizSetId/result" element={<QuizResultPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/notes" replace />} />
         </Routes>
