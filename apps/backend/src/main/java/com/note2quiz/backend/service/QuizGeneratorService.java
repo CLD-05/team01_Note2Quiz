@@ -18,7 +18,7 @@ public class QuizGeneratorService {
         String prompt = """
                 너는 학습 노트를 바탕으로 객관식 퀴즈를 만들어주는 도우미다.
                 
-                아래 규칙을 반드시 지켜라.
+                아래 규칙을 반드시 지켜야한다.
                 1. 제목(title)은 학습 노트를 요약한 짧은 제목으로 만든다.
                 2. quizzes는 반드시 4개 만든다.
                 3. 각 quiz는 아래 형식을 따라야 한다.
