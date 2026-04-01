@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/notes")
 @RequiredArgsConstructor
@@ -21,13 +25,12 @@ public class NoteController {
         return noteService.getMyNotes(currentUserId);
     }
     
-//    @GetMapping("/{noteId}")
-//    public ResponseEntity<NoteResponseDTO> getNoteDetail(@PathVariable Long noteId) {
-//        // 여기서도 일단 임시 유저 1번으로 테스트!
-//        Long currentUserId = 1L; 
-//
-//        // 지현이가 서비스에 만든 getNoteDetail 호출!
-//        NoteResponseDTO response = noteService.getNoteDetail(noteId, currentUserId);
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/{noteId}")
+    public ResponseEntity<NoteResponseDTO> getNoteDetail(@PathVariable Long noteId) {
+    	// 테스트용: 현재 로그인 유저 ID를 1로 고정
+        Long currentUserId = 1L; 
+
+        NoteResponseDTO response = noteService.getNoteDetail(noteId, currentUserId);
+        return ResponseEntity.ok(response);
+    }
 }

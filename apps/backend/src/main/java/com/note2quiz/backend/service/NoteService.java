@@ -12,12 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class NoteService {
     private final NoteRepository noteRepository;
-    
+
     @Transactional(readOnly = true)
     public List<NoteResponseDTO> getMyNotes(Long userId) {
         
@@ -28,8 +29,8 @@ public class NoteService {
                 .map(note -> NoteResponseDTO.builder()
                         .id(note.getId())
                         .title(note.getTitle())
-                        .content(note.getContent())
                         .createdAt(note.getCreatedAt())
+                        .quizSetCount(0)
                         .build())
                 .collect(Collectors.toList());
     }
@@ -39,11 +40,11 @@ public class NoteService {
     public NoteResponseDTO getNoteDetail(Long noteId, Long userId) {
         
         Note note = noteRepository.findById(noteId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 노트를 찾을 수 없습니다. ID: " + noteId));
+                .orElseThrow(() -> new IllegalArgumentException("해당 노트를 찾을 수 없습니다."));
 
         
         if (!note.getUser().getId().equals(userId)) {
-            throw new IllegalStateException("본인의 가이드(노트)만 조회할 수 있는 권한이 있습니다.");
+            throw new IllegalStateException("본인의 노트 조회할 수 있는 권한이 있습니다.");
         }
 
         

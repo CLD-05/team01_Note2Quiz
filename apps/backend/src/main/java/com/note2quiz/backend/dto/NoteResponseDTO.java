@@ -8,14 +8,16 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-@Getter 
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class NoteResponseDTO {
+
     private Long id;
     private String title;
     private String content;
     private LocalDateTime createdAt;
+    private Integer quizSetCount;
 }
