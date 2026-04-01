@@ -20,4 +20,14 @@ public class NoteController {
         Long currentUserId = 1L; 
         return noteService.getMyNotes(currentUserId);
     }
+    
+//    @GetMapping("/{noteId}")
+//    public ResponseEntity<NoteResponseDTO> getNoteDetail(@PathVariable Long noteId) {
+//        // 여기서도 일단 임시 유저 1번으로 테스트!
+//        Long currentUserId = 1L; 
+//
+//        // 지현이가 서비스에 만든 getNoteDetail 호출!
+//        NoteResponseDTO response = noteService.getNoteDetail(noteId, currentUserId);
+//        return ResponseEntity.ok(response);
+//    }
 }
