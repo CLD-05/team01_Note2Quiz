@@ -48,4 +48,8 @@ public class Note {
     @Column(name = "quiz_count", nullable = false)
     @Builder.Default  
     private Integer quizCount = 0;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "note_id", insertable = false, updatable = false) 
+    private List<QuizSet> quizSets = new ArrayList<>();
 }
