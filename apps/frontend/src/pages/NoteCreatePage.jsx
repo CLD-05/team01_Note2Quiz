@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { createQuizSet } from '../api/quizApi';
 
 export default function NoteCreatePage() {
   const navigate = useNavigate();
@@ -14,37 +14,18 @@ export default function NoteCreatePage() {
 
   const handleCreate = async () => {
     if (!content.trim() || isLoading) return;
-    
+
     setIsLoading(true);
-    const startTime = Date.now();  
 
     try {
-      // 2. 가짜 서버에 보내던 복잡한 newNote 객체를 지우고, 백엔드가 요구하는 내용(content)만 전송합니다.
-      const response = await axios.post(
-        API_URL, 
-        { content: content }, 
-        { withCredentials: true }
-      );
+      const response = await createQuizSet(content);
+      const { quizSetId } = response.data;
 
-      const endTime = Date.now();
-      const gap = endTime - startTime;
-      const minWait = 3000; 
-
-      if (gap < minWait) {
-        await new Promise(resolve => setTimeout(resolve, minWait - gap));
-      }
-
-      const targetId = response.data.quizSetId || response.data.id; 
-
-      if (targetId) {
-        navigate(`/quizzes/${targetId}`);
-      } else {
-        navigate('/notes'); 
-      }
+      navigate(`/quizzes/${quizSetId}`);
 
     } catch (error) {
-      console.error("생성 실패:", error);
-      alert("노트 저장 및 퀴즈 생성에 실패했습니다. 백엔드 서버를 확인해주세요.");
+      console.error("퀴즈 생성 실패:", error);
+      alert("퀴즈 생성에 실패했습니다. 백엔드 서버를 확인해주세요.");
       setIsLoading(false);
     }
   };

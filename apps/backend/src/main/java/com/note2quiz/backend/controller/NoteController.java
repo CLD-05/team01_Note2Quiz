@@ -17,7 +17,6 @@ public class NoteController {
     private final NoteService noteService;
     private final UserRepository userRepository;
 
-    // 💡 핵심: 토큰에서 직접 userId를 꺼내는 메서드
     private Long getCurrentUserId() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email)
@@ -26,19 +25,19 @@ public class NoteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<NoteResponse>> getNoteList() { // 👈 여기에 @RequestParam userId가 절대 있으면 안 됩니다!
+    public ResponseEntity<List<NoteResponse>> getNoteList() {
         List<NoteResponse> notes = noteService.getMyNotes(getCurrentUserId());
         return ResponseEntity.ok(notes);
     }
 
     @GetMapping("/{noteId}")
-    public ResponseEntity<NoteResponse> getNoteDetail(@PathVariable Long noteId) { // 👈 여기도 삭제!
+    public ResponseEntity<NoteResponse> getNoteDetail(@PathVariable Long noteId) {
         NoteResponse response = noteService.getNoteDetail(noteId, getCurrentUserId());
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{noteId}")
-    public ResponseEntity<Void> deleteNote(@PathVariable Long noteId) { // 👈 여기도 삭제!
+    public ResponseEntity<Void> deleteNote(@PathVariable Long noteId) {
         noteService.deleteNote(noteId, getCurrentUserId());
         return ResponseEntity.noContent().build();
     }
