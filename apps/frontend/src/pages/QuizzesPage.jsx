@@ -1,73 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MagnifyingGlass, CalendarBlank, ListNumbers } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
+import { getQuizSets } from '../api/quizApi';
 
-// 퀴즈 목록 임시 데이터 (객관식만 남김)
-const quizList = [
-  {
-    id: 1,
-    title: 'Docker 컨테이너 기초',
-    tags: [{ label: '객관식', color: 'blue' }],
-    date: '2026.03.28',
-    count: 10,
-  },
-  {
-    id: 2,
-    title: 'AWS EC2 인스턴스 관리',
-    tags: [{ label: '객관식', color: 'blue' }],
-    date: '2026.03.27',
-    count: 15,
-  },
-  {
-    id: 3,
-    title: 'Linux 파일 시스템 구조',
-    tags: [{ label: '객관식', color: 'blue' }],
-    date: '2026.03.25',
-    count: 8,
-  },
-  {
-    id: 4,
-    title: '네트워크 기초 - TCP/IP',
-    tags: [{ label: '객관식', color: 'blue' }],
-    date: '2026.03.24',
-    count: 12,
-  },
-  {
-    id: 5,
-    title: 'Kubernetes Pod 개념',
-    tags: [{ label: '객관식', color: 'blue' }],
-    date: '2026.03.22',
-    count: 10,
-  },
-  {
-    id: 6,
-    title: 'CI/CD 파이프라인 구축',
-    tags: [{ label: '객관식', color: 'blue' }],
-    date: '2026.03.20',
-    count: 14,
-  },
-];
-
-// 태그 색상을 결정하는 헬퍼 함수
-const getTagStyle = (color) => {
-  switch (color) {
-    case 'blue':
-      return 'bg-blue-50 text-blue-600';
-    case 'amber':
-      return 'bg-amber-50 text-amber-600';
-    case 'purple':
-      return 'bg-purple-50 text-purple-600';
-    default:
-      return 'bg-gray-50 text-gray-600';
-  }
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  return dateString.split('T')[0].replace(/-/g, '.');
 };
 
 export default function QuizzesPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [quizSets, setQuizSets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filteredQuizzes = quizList.filter((quiz) =>
+  useEffect(() => {
+    getQuizSets()
+      .then((res) => setQuizSets(res.data))
+      .catch((err) => console.error('퀴즈 목록 로딩 실패:', err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  const filteredQuizzes = quizSets.filter((quiz) =>
     quiz.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
@@ -96,24 +51,21 @@ export default function QuizzesPage() {
       {/* 퀴즈 카드 리스트 영역 */}
       <div className="flex-1 overflow-y-auto px-10 py-8">
         <div className="max-w-[1200px]">
-          {filteredQuizzes.length > 0 ? (
+          {isLoading ? (
+            <div className="flex justify-center py-40 text-gray-400 font-medium">로딩 중...</div>
+          ) : filteredQuizzes.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredQuizzes.map((quiz) => (
                 <div
-                  key={quiz.id}
-                  onClick={() => navigate(`/quizzes/${quiz.id}`)}
+                  key={quiz.quizSetId}
+                  onClick={() => navigate(`/quizzes/${quiz.quizSetId}`)}
                   className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:border-primary/30 group h-[200px]"
                 >
                   {/* 카드 태그 */}
                   <div className="flex items-center gap-2 mb-4">
-                    {quiz.tags.map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className={`px-2.5 py-1 rounded-md text-xs font-semibold tracking-wide ${getTagStyle(tag.color)}`}
-                      >
-                        {tag.label}
-                      </span>
-                    ))}
+                    <span className="px-2.5 py-1 rounded-md text-xs font-semibold tracking-wide bg-blue-50 text-blue-600">
+                      객관식
+                    </span>
                   </div>
 
                   {/* 카드 제목 */}
@@ -127,12 +79,12 @@ export default function QuizzesPage() {
                   <div className="flex items-center gap-4 text-sm text-gray-500 pt-4 border-t border-gray-100 mt-4">
                     <div className="flex items-center gap-1.5">
                       <CalendarBlank size={16} />
-                      <span>{quiz.date}</span>
+                      <span>{formatDate(quiz.createdAt)}</span>
                     </div>
                     <div className="w-1 h-1 rounded-full bg-gray-300"></div>
                     <div className="flex items-center gap-1.5">
                       <ListNumbers size={16} />
-                      <span>{quiz.count}문제</span>
+                      <span>{quiz.questionCount}문제</span>
                     </div>
                   </div>
                 </div>
@@ -140,7 +92,9 @@ export default function QuizzesPage() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-center">
-              <p className="text-slate-400 text-sm">"{searchQuery}"에 해당하는 퀴즈가 없습니다.</p>
+              <p className="text-slate-400 text-sm">
+                {searchQuery ? `"${searchQuery}"에 해당하는 퀴즈가 없습니다.` : '아직 생성된 퀴즈가 없습니다.'}
+              </p>
             </div>
           )}
 

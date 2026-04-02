@@ -15,4 +15,5 @@ public class QuizDetailResponse {
     private String title;
     private LocalDateTime createdAt;
     private List<QuizItemResponse> quizzes;
+    private String noteContent;
 }

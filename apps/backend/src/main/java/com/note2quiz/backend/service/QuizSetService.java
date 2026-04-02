@@ -100,6 +100,9 @@ public class QuizSetService {
         QuizSet quizSet = quizSetRepository.findById(quizSetId)
                 .orElseThrow(() -> new IllegalArgumentException("퀴즈셋이 존재하지 않습니다. id=" + quizSetId));
 
+        Note note = noteRepository.findById(quizSet.getNoteId()).orElse(null);
+        String noteContent = note != null ? note.getContent() : null;
+
         List<QuizItemResponse> quizzes = quizSet.getQuizzes()
                 .stream()
                 .map(quiz -> {
@@ -128,6 +131,7 @@ public class QuizSetService {
                 .title(quizSet.getTitle())
                 .createdAt(quizSet.getCreatedAt())
                 .quizzes(quizzes)
+                .noteContent(noteContent)
                 .build();
     }
 }

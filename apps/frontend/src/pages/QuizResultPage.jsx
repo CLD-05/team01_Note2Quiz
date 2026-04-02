@@ -37,7 +37,7 @@ export default function QuizResultPage() {
         {/* 상단 네비게이션 */}
         <button 
           onClick={() => navigate('/quizzes')}
-          className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors text-sm font-medium mb-8"
+          className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors text-sm font-medium mb-8 cursor-pointer"
         >
           <ArrowLeft size={16} />
           내 퀴즈 보관함으로 돌아가기
@@ -99,7 +99,7 @@ export default function QuizResultPage() {
             <div className="flex gap-3">
               <button 
                 onClick={() => navigate(-1)} 
-                className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-lg font-bold text-sm hover:bg-slate-50 transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-lg font-bold text-sm hover:bg-slate-50 transition-colors cursor-pointer"
               >
                 <ArrowCounterClockwise size={18} /> 다시 풀기
               </button>
