@@ -1,16 +1,24 @@
 package com.note2quiz.backend.controller;
 
+import java.util.Map;
+
+import org.springframework.http.HttpHeaders; // 추가
+import org.springframework.http.ResponseCookie; // 추가
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.note2quiz.backend.config.JwtTokenProvider; // 추가
 import com.note2quiz.backend.dto.LoginRequest;
 import com.note2quiz.backend.dto.LoginResponse;
 import com.note2quiz.backend.dto.SignupRequest;
 import com.note2quiz.backend.service.AuthService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders; // 추가
-import org.springframework.http.ResponseCookie; // 추가
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -29,7 +37,7 @@ public class AuthController {
 
     // 2. 로그인 (쿠키 설정 로직 추가)
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<Map<String,String>> login(@Valid @RequestBody LoginRequest request) {
         // 서비스에서 로그인을 수행하고 토큰 문자열을 받아옵니다.
         // (주의: 기존 LoginResponse 객체 대신 토큰 문자열만 받도록 AuthService 수정이 필요할 수 있습니다.)
         LoginResponse loginResponse = authService.login(request);
@@ -41,7 +49,7 @@ public class AuthController {
         // 2. 응답 헤더(SET_COOKIE)에 실어서 보냅니다.
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("로그인이 완료되었습니다."); // 이제 바디에 토큰을 담지 않아도 브라우저가 자동으로 쿠키를 저장합니다.
+                .body(Map.of("nickname", loginResponse.getNickname())); // 이제 바디에 토큰을 담지 않아도 브라우저가 자동으로 쿠키를 저장합니다.
     }
 
     // 3. 로그아웃 (서버에서 쿠키를 삭제하도록 명령)

@@ -77,6 +77,7 @@ docker-compose.override.yml
 .settings
 .springBeans
 .sts4-cache
+apps/.metadata/
 
 # OS (Mac, Windows)
 .DS_Store
