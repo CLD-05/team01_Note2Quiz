@@ -40,8 +40,9 @@ public class QuizSetService {
                 .title(title)
                 .content(request.getContent())
                 .createdAt(LocalDateTime.now())
+                .quizCount(quizzes.size())
                 .build();
-
+        
         Note savedNote = noteRepository.save(note);
 
         // 2. quizSet 저장
