@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getNotes, deleteNote } from '../api/noteApi';
+import PageHeader from '../components/PageHeader';
 
 export default function NotesPage() {
   const navigate = useNavigate();
@@ -58,50 +59,43 @@ export default function NotesPage() {
     .filter(note => selectedIds.includes(note.id))
     .reduce((sum, note) => sum + (note.quizCount || 0), 0);
 
-  return (
-    <div className="flex-1 flex flex-col bg-[#F9FAFB] min-h-screen relative">
-      
-      <header className="h-24 px-10 flex items-center justify-between bg-white border-b border-gray-100 shrink-0">
-        <h1 className="text-[28px] font-extrabold text-gray-900 tracking-tight">Notes</h1>
-        
-        <div className="flex items-center gap-3">
-          {!isDeleteMode && (
-            <div className="relative group mr-1 animate-in fade-in zoom-in duration-200">
-              <i className="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm group-focus-within:text-primary transition-colors"></i>
-              <input 
-                type="text" 
-                placeholder="노트 검색..." 
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-64 pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
-              />
-            </div>
-          )}
-
-          <button 
-            onClick={() => { 
-              setIsDeleteMode(!isDeleteMode); 
-              setSelectedIds([]); 
-              if(isDeleteMode) setSearchTerm(''); 
-            }}
-            className={`h-10 px-4 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 shadow-sm ${
-              isDeleteMode ? 'bg-red-500 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:text-red-600 hover:bg-red-50'
-            }`}
-          >
-            <i className={isDeleteMode ? "ph ph-x text-lg" : "ph ph-trash text-lg"}></i>
-            {isDeleteMode ? '삭제 취소' : '노트 삭제하기'}
-          </button>
-
-          {!isDeleteMode && (
-            <button 
-              onClick={() => navigate('/notes/new')} 
-              className="h-10 bg-primary text-white px-5 rounded-lg text-sm font-bold hover:bg-blue-600 transition-all flex items-center gap-2 shadow-md"
-            >
-              <i className="ph-bold ph-plus text-base"></i>새 노트 추가
-            </button>
-          )}
+  const rightSlot = (
+    <div className="flex items-center gap-3">
+      {!isDeleteMode && (
+        <div className="relative group mr-1 animate-in fade-in zoom-in duration-200">
+          <i className="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm group-focus-within:text-primary transition-colors"></i>
+          <input
+            type="text"
+            placeholder="노트 검색..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-64 pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
+          />
         </div>
-      </header>
+      )}
+      <button
+        onClick={() => { setIsDeleteMode(!isDeleteMode); setSelectedIds([]); if (isDeleteMode) setSearchTerm(''); }}
+        className={`h-9 px-4 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 shadow-sm cursor-pointer ${
+          isDeleteMode ? 'bg-red-500 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:text-red-600 hover:bg-red-50'
+        }`}
+      >
+        <i className={isDeleteMode ? 'ph ph-x text-lg' : 'ph ph-trash text-lg'}></i>
+        {isDeleteMode ? '삭제 취소' : '노트 삭제하기'}
+      </button>
+      {!isDeleteMode && (
+        <button
+          onClick={() => navigate('/notes/new')}
+          className="h-9 bg-primary text-white px-4 rounded-lg text-sm font-bold hover:bg-blue-600 transition-all flex items-center gap-2 shadow-md cursor-pointer"
+        >
+          <i className="ph-bold ph-plus text-base"></i>새 노트 추가
+        </button>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="flex-1 flex flex-col bg-[#F9FAFB]">
+      <PageHeader title="Notes" rightSlot={rightSlot} />
 
       <main className="flex-1 px-10 py-10 overflow-y-auto">
         <div className="max-w-[1600px] mx-auto">
@@ -114,7 +108,7 @@ export default function NotesPage() {
               <button 
                 onClick={() => selectedIds.length > 0 && setShowDeleteModal(true)}
                 disabled={selectedIds.length === 0}
-                className={`text-sm font-bold flex items-center gap-1.5 transition-colors ${selectedIds.length > 0 ? 'text-red-600 hover:text-red-700' : 'text-gray-300'}`}
+                className={`text-sm font-bold flex items-center gap-1.5 transition-colors ${selectedIds.length > 0 ? 'text-red-600 hover:text-red-700 cursor-pointer' : 'text-gray-300 cursor-not-allowed'}`}
               >
                 <i className="ph-fill ph-trash text-lg"></i>선택 삭제
               </button>
@@ -125,7 +119,7 @@ export default function NotesPage() {
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
             </div>
-          ) : (
+          ) : filteredNotes.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredNotes.map((note) => {
                 const isSelected = selectedIds.includes(note.id);
@@ -175,6 +169,12 @@ export default function NotesPage() {
                 );
               })}
             </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              <p className="text-slate-400 text-sm">
+                {searchTerm ? `"${searchTerm}"에 해당하는 노트가 없습니다.` : '아직 작성된 노트가 없습니다.'}
+              </p>
+            </div>
           )}
         </div>
       </main>
@@ -201,8 +201,8 @@ export default function NotesPage() {
                 </div>
               </div>
               <div className="flex gap-3">
-                <button onClick={() => setShowDeleteModal(false)} className="flex-1 px-4 py-3 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-100 border border-gray-200 transition-colors">취소</button>
-                <button onClick={handleDeleteConfirm} className="flex-1 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-500 hover:bg-red-600 transition-colors shadow-sm shadow-red-500/20">삭제하기</button>
+                <button onClick={() => setShowDeleteModal(false)} className="flex-1 px-4 py-3 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-100 border border-gray-200 transition-colors cursor-pointer">취소</button>
+                <button onClick={handleDeleteConfirm} className="flex-1 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-500 hover:bg-red-600 transition-colors shadow-sm shadow-red-500/20 cursor-pointer">삭제하기</button>
               </div>
             </div>
           </div>

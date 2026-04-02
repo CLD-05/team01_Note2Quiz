@@ -1,11 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import {
-  SquaresFour,
-  Notebook,
-  ClockCounterClockwise,
-  GearSix,
-  SignOut,
-} from '@phosphor-icons/react';
+import { SquaresFour, Notebook, ClockCounterClockwise, SignOut } from '@phosphor-icons/react';
 import { useAuth } from '../contexts/AuthContext';
 
 const NAV_ITEMS = [
@@ -36,8 +30,19 @@ export default function Sidebar() {
     <aside className="flex w-[260px] shrink-0 flex-col bg-sidebar text-slate-300 shadow-xl">
       {/* 로고 */}
       <div className="flex h-20 shrink-0 items-center gap-3 px-6">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-white shadow-lg shadow-primary/30">
-          <Notebook size={20} weight="bold" />
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-white shadow-lg shadow-primary/20">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
         </div>
         <span className="text-xl font-bold tracking-wide text-white">Note2Quiz</span>
       </div>
@@ -70,7 +75,7 @@ export default function Sidebar() {
           </div>
           <button
             onClick={handleLogout}
-            className="rounded p-1 text-gray-400 transition-colors hover:text-white"
+            className="rounded p-1 text-gray-400 transition-colors hover:text-white cursor-pointer"
           >
             <SignOut size={18} />
           </button>
