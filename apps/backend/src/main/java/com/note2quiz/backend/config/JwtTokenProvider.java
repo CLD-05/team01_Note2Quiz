@@ -16,7 +16,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final SecretKey key;
-    private final long validityInMilliseconds = 3600000; // 1시간
+    private final long validityInMilliseconds = 604800000; // 7일
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));

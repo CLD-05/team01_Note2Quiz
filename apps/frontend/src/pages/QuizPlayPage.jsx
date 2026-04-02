@@ -11,6 +11,7 @@ export default function QuizPlayPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userAnswers, setUserAnswers] = useState({});
+  const [openHints, setOpenHints] = useState(new Set());
   const [isNoteOpen, setIsNoteOpen] = useState(false);
   const questionRefs = useRef([]);
 
@@ -41,7 +42,9 @@ export default function QuizPlayPage() {
   // 패널 열릴 때 스크롤 잠금
   useEffect(() => {
     document.body.style.overflow = isNoteOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isNoteOpen]);
 
   const handleGoBack = () => {
@@ -54,8 +57,16 @@ export default function QuizPlayPage() {
     }
   };
 
+  const toggleHint = (questionId) => {
+    setOpenHints((prev) => {
+      const next = new Set(prev);
+      next.has(questionId) ? next.delete(questionId) : next.add(questionId);
+      return next;
+    });
+  };
+
   const handleSelect = (questionId, optionIdx) => {
-    setUserAnswers(prev => {
+    setUserAnswers((prev) => {
       if (prev[questionId] === optionIdx) {
         const newAnswers = { ...prev };
         delete newAnswers[questionId];
@@ -66,7 +77,7 @@ export default function QuizPlayPage() {
   };
 
   const handleSubmit = () => {
-    const unansweredIndex = quizData.quizzes.findIndex(q => userAnswers[q.id] === undefined);
+    const unansweredIndex = quizData.quizzes.findIndex((q) => userAnswers[q.id] === undefined);
 
     if (unansweredIndex !== -1) {
       alert(`${unansweredIndex + 1}번 문제를 아직 풀지 않았습니다.`);
@@ -118,7 +129,10 @@ export default function QuizPlayPage() {
       <main className="flex-1 flex items-center justify-center bg-slate-50">
         <div className="text-center">
           <p className="text-slate-700 font-semibold mb-4">{error ?? '퀴즈를 찾을 수 없습니다.'}</p>
-          <button onClick={() => navigate('/quizzes')} className="px-4 py-2 bg-primary text-white rounded-lg font-medium">
+          <button
+            onClick={() => navigate('/quizzes')}
+            className="px-4 py-2 bg-primary text-white rounded-lg font-medium"
+          >
             목록으로
           </button>
         </div>
@@ -128,7 +142,6 @@ export default function QuizPlayPage() {
 
   return (
     <main className="flex-1 flex flex-col min-w-0 bg-slate-50 h-full relative">
-
       {/* 헤더 */}
       <header className="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8 flex-shrink-0 z-10 sticky top-0 shadow-sm">
         <div className="flex-1">
@@ -184,16 +197,86 @@ export default function QuizPlayPage() {
             return (
               <div
                 key={question.id}
-                ref={el => questionRefs.current[qIdx] = el}
+                ref={(el) => (questionRefs.current[qIdx] = el)}
                 className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
               >
                 <div className="p-8 md:p-10">
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="px-2.5 py-1 bg-blue-50 text-primary text-xs font-bold rounded-md">객관식</span>
+                    <span className="px-2.5 py-1 bg-blue-50 text-primary text-xs font-bold rounded-md">
+                      객관식
+                    </span>
                   </div>
                   <h2 className="text-lg font-semibold text-slate-900 mb-6 leading-relaxed">
                     Q{qIdx + 1}. {question.question}
                   </h2>
+
+                  {question.tip && (
+                    <div className="mb-6 flex flex-col items-start">
+                      <button
+                        onClick={() => toggleHint(question.id)}
+                        className={`group flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors cursor-pointer focus:outline-none ${
+                          openHints.has(question.id)
+                            ? 'bg-slate-50 border-slate-300'
+                            : 'bg-white border-slate-200 hover:bg-slate-50'
+                        }`}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          fill="currentColor"
+                          viewBox="0 0 256 256"
+                          className={`transition-colors ${openHints.has(question.id) ? 'text-amber-500' : 'text-slate-500 group-hover:text-amber-500'}`}
+                        >
+                          <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z" />
+                        </svg>
+                        <span className="text-[14px] font-medium text-slate-600 group-hover:text-slate-900 transition-colors">
+                          {openHints.has(question.id) ? '힌트 닫기' : '힌트 보기'}
+                        </span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          viewBox="0 0 256 256"
+                          className={`text-slate-400 transition-transform duration-300 ml-1 ${openHints.has(question.id) ? 'rotate-180' : ''}`}
+                        >
+                          <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z" />
+                        </svg>
+                      </button>
+
+                      <div
+                        className={`grid transition-[grid-template-rows] duration-300 ease-in-out w-full ${
+                          openHints.has(question.id)
+                            ? 'grid-rows-[1fr] opacity-100'
+                            : 'grid-rows-[0fr] opacity-0'
+                        }`}
+                      >
+                        <div className="overflow-hidden">
+                          <div className="mt-3 p-4 rounded-xl bg-amber-50/50 border border-amber-100 flex gap-3">
+                            <div className="mt-0.5 text-amber-500 shrink-0">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                fill="currentColor"
+                                viewBox="0 0 256 256"
+                              >
+                                <path d="M240,128a112,112,0,1,1-112-112A112.12,112.12,0,0,1,240,128Zm-112-72a16,16,0,1,0,16,16A16,16,0,0,0,128,56Zm24,112H136V120a8,8,0,0,0-8-8H112a8,8,0,0,0,0,16h8v40H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16Z" />
+                              </svg>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-bold text-amber-900 mb-1">Tip</h4>
+                              <p className="text-[15px] leading-relaxed text-amber-800/80 break-keep">
+                                {question.tip}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 gap-3">
                     {question.options.map((option, oIdx) => {
                       const isThisSelected = selectedIdx === oIdx;
@@ -253,7 +336,8 @@ export default function QuizPlayPage() {
 
         {/* 패널 콘텐츠 */}
         <div className="flex-1 overflow-y-auto px-10 py-8">
-          <div className="prose prose-slate max-w-none
+          <div
+            className="prose prose-slate max-w-none
             prose-headings:font-bold prose-headings:text-slate-900
             prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg
             prose-p:text-slate-700 prose-p:leading-relaxed prose-p:text-[15px]
@@ -263,7 +347,8 @@ export default function QuizPlayPage() {
             prose-pre:bg-slate-900 prose-pre:text-slate-100
             prose-blockquote:border-l-primary prose-blockquote:text-slate-600
             prose-a:text-primary
-          ">
+          "
+          >
             <ReactMarkdown>{quizData.noteContent}</ReactMarkdown>
           </div>
         </div>

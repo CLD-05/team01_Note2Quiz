@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from '@phosphor-icons/react';
+import ReactMarkdown from 'react-markdown';
 import { getNote, deleteNote } from '../api/noteApi';
 import PageHeader from '../components/PageHeader';
 
@@ -67,8 +68,18 @@ export default function NoteDetailPage() {
             </div>
           </header>
 
-          <div className="text-lg text-gray-700 leading-[1.85] whitespace-pre-wrap mb-24">
-            {note.content}
+          <div className="prose prose-slate max-w-none mb-24
+            prose-headings:font-bold prose-headings:text-slate-900
+            prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg
+            prose-p:text-slate-700 prose-p:leading-relaxed prose-p:text-[15px]
+            prose-li:text-slate-700 prose-li:text-[15px]
+            prose-strong:text-slate-900
+            prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:text-slate-800
+            prose-pre:bg-slate-900 prose-pre:text-slate-100
+            prose-blockquote:border-l-primary prose-blockquote:text-slate-600
+            prose-a:text-primary
+          ">
+            <ReactMarkdown>{note.content}</ReactMarkdown>
           </div>
 
           <footer className="pt-8 border-t border-gray-100 flex justify-end">
