@@ -8,18 +8,40 @@ export default function NoteDetailPage() {
   const [note, setNote] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // 1. 스프링 부트 API 주소로 변경
+  const API_URL = "http://localhost:8080/api/notes";
+
   useEffect(() => {
-    axios.get(`http://localhost:3001/notes/${noteId}`)
-      .then(res => { setNote(res.data); setIsLoading(false); })
-      .catch(() => navigate('/notes'));
+    // 2. withCredentials: true 추가 (토큰 전송)
+    axios.get(`${API_URL}/${noteId}`, { withCredentials: true })
+      .then(res => { 
+        setNote(res.data); 
+        setIsLoading(false); 
+      })
+      .catch((error) => {
+        console.error("상세 데이터 로딩 실패:", error);
+        navigate('/notes');
+      });
   }, [noteId, navigate]);
+
+  // 3. 삭제 기능도 백엔드 주소로 맞추고 함수로 깔끔하게 분리
+  const handleDelete = async () => {
+    if (window.confirm("삭제하시겠습니까?")) {
+      try {
+        await axios.delete(`${API_URL}/${noteId}`, { withCredentials: true });
+        navigate('/notes');
+      } catch (error) {
+        console.error("삭제 실패:", error);
+        alert("노트 삭제 중 오류가 발생했습니다.");
+      }
+    }
+  };
 
   if (isLoading || !note) return null;
 
   return (
     <div className="flex-1 flex flex-col h-full bg-[#F9FAFB] relative">
       
-
       <div className="fixed top-0 left-0 right-0 h-16 z-[110] pointer-events-none lg:left-64">
         <div className="flex items-center justify-between h-full px-10 pointer-events-auto mt-1">
 
@@ -44,10 +66,11 @@ export default function NoteDetailPage() {
         <article className="max-w-[800px] mx-auto px-10 py-16">
           <header className="mb-12">
             <div className="flex gap-4 text-xs text-gray-400 mb-6">
-              <span>{note.createdAt.split('T')[0]}</span>
+              
+              <span>{note.createdAt ? note.createdAt.split('T')[0] : '날짜 없음'}</span>
               <span>|</span>
-              <span>{note.wordCount}자</span>
-              <span className="text-emerald-600 font-bold">{note.quizCount}문제</span>
+              <span>{note.wordCount || 0}자</span>
+              <span className="text-emerald-600 font-bold">{note.quizCount || 0}문제</span>
             </div>
             <h2 className="text-3xl font-extrabold text-gray-900 leading-tight">{note.title}</h2>
           </header>
@@ -58,7 +81,7 @@ export default function NoteDetailPage() {
 
           <footer className="pt-8 border-t border-gray-100 flex justify-end">
             <button 
-              onClick={() => { if(window.confirm("삭제하시겠습니까?")) axios.delete(`http://localhost:3001/notes/${noteId}`).then(() => navigate('/notes')) }}
+              onClick={handleDelete}
               className="text-sm text-gray-400 hover:text-red-500 font-semibold flex items-center gap-1.5"
             >
               <i className="ph ph-trash text-lg"></i>

@@ -8,41 +8,43 @@ export default function NoteCreatePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const MAX_LENGTH = 10000;
+  
+  // 1. 스프링 부트 퀴즈 생성 API 주소 (컨트롤러 설정에 따라 /api/quiz-sets 일 수도 있습니다)
+  const API_URL = "http://localhost:8080/api/quizzes"; 
 
   const handleCreate = async () => {
     if (!content.trim() || isLoading) return;
     
     setIsLoading(true);
-    const startTime = Date.now(); // 🚨 시작 시간 박제
+    const startTime = Date.now();  
 
     try {
-      const newNote = {
-        title: content.split('\n')[0].substring(0, 30) || "새로운 학습 노트",
-        content: content,
-        createdAt: new Date().toISOString(),
-        wordCount: content.length,
-        quizCount: 10,
-        preview: content.substring(0, 80).replace(/\n/g, ' ') + "..."
-      };
-
-
-      await axios.post('http://localhost:3001/notes', newNote);
-
+      // 2. 가짜 서버에 보내던 복잡한 newNote 객체를 지우고, 백엔드가 요구하는 내용(content)만 전송합니다.
+      const response = await axios.post(
+        API_URL, 
+        { content: content }, 
+        { withCredentials: true }
+      );
 
       const endTime = Date.now();
       const gap = endTime - startTime;
-      const minWait = 3000; // 3초
-
+      const minWait = 3000; 
 
       if (gap < minWait) {
         await new Promise(resolve => setTimeout(resolve, minWait - gap));
       }
 
-      navigate('/notes');
+      const targetId = response.data.quizSetId || response.data.id; 
+
+      if (targetId) {
+        navigate(`/quizzes/${targetId}`);
+      } else {
+        navigate('/notes'); 
+      }
 
     } catch (error) {
-      console.error("저장 실패:", error);
-      alert("서버 통신에 실패했습니다. db.json 서버를 확인해주세요.");
+      console.error("생성 실패:", error);
+      alert("노트 저장 및 퀴즈 생성에 실패했습니다. 백엔드 서버를 확인해주세요.");
       setIsLoading(false);
     }
   };
