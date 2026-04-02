@@ -8,6 +8,9 @@ export default function NoteCreatePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const MAX_LENGTH = 10000;
+  
+  // 1. 스프링 부트 퀴즈 생성 API 주소 (컨트롤러 설정에 따라 /api/quiz-sets 일 수도 있습니다)
+  const API_URL = "http://localhost:8080/api/quizzes"; 
 
   const handleCreate = async () => {
     if (!content.trim() || isLoading) return;
