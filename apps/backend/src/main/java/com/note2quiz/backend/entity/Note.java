@@ -27,12 +27,6 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    /*
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    */
-    
     @Column(name = "user_id", nullable = false)
     private Long userId;
     
@@ -51,8 +45,7 @@ public class Note {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // 퀴즈셋 개발 완료 시 주석 제거 예정
-//    @Builder.Default 
-//    @OneToMany(mappedBy = "note", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<QuizSet> quizSets = new ArrayList<>();
+    @Column(name = "quiz_count", nullable = false)
+    @Builder.Default  
+    private Integer quizCount = 0;
 }
