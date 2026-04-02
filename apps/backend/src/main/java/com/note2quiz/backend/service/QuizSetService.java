@@ -27,8 +27,7 @@ public class QuizSetService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Transactional
-    public QuizCreateResponse createQuizSet(QuizCreateRequest request) {
-        Long tempUserId = 1L;
+    public QuizCreateResponse createQuizSet(QuizCreateRequest request, Long userId) {
 
         Map<String, Object> generated = quizGeneratorService.generateQuizSet(request.getContent());
 
@@ -37,7 +36,7 @@ public class QuizSetService {
 
         // 1. note 먼저 저장
         Note note = Note.builder()
-                .userId(tempUserId)
+                .userId(userId)
                 .title(title)
                 .content(request.getContent())
                 .createdAt(LocalDateTime.now())
@@ -48,7 +47,7 @@ public class QuizSetService {
         // 2. quizSet 저장
         QuizSet quizSet = QuizSet.builder()
                 .noteId(savedNote.getId())
-                .userId(tempUserId)
+                .userId(userId)
                 .title(title)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -83,10 +82,8 @@ public class QuizSetService {
     }
 
     @Transactional(readOnly = true)
-    public List<QuizSummaryResponse> getQuizSets() {
-        Long tempUserId = 1L;
-
-        return quizSetRepository.findByUserIdOrderByCreatedAtDesc(tempUserId)
+    public List<QuizSummaryResponse> getQuizSets(Long userId) {
+        return quizSetRepository.findByUserIdOrderByCreatedAtDesc(userId)
                 .stream()
                 .map(quizSet -> QuizSummaryResponse.builder()
                         .quizSetId(quizSet.getId())

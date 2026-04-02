@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { getNotes, deleteNote } from '../api/noteApi';
 
 export default function NotesPage() {
   const navigate = useNavigate();
@@ -11,8 +11,6 @@ export default function NotesPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const API_URL = 'http://localhost:3001/notes';
-
   useEffect(() => {
     fetchNotes();
   }, []);
@@ -20,7 +18,7 @@ export default function NotesPage() {
   const fetchNotes = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(API_URL);
+      const response = await getNotes();
       setNotes(response.data);
     } catch (error) {
       console.error("데이터 로딩 실패:", error);
@@ -36,7 +34,7 @@ export default function NotesPage() {
 
   const handleDeleteConfirm = async () => {
     try {
-      await Promise.all(selectedIds.map(id => axios.delete(`${API_URL}/${id}`)));
+      await Promise.all(selectedIds.map(id => deleteNote(id)));
       setNotes(notes.filter(note => !selectedIds.includes(note.id)));
       setSelectedIds([]);
       setShowDeleteModal(false);
