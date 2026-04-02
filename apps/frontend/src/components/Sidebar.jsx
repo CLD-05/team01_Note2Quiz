@@ -9,7 +9,7 @@ const NAV_ITEMS = [
 ];
 
 export default function Sidebar() {
-  const { user, logout } = useAuth();
+  const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -68,10 +68,16 @@ export default function Sidebar() {
       <div className="border-t border-gray-800 p-4">
         <div className="flex items-center gap-3 rounded-lg px-3 py-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500 text-sm font-medium text-white">
-            {user?.nickname?.charAt(0) || 'U'}
+            {loading ? '·' : user?.nickname?.charAt(0) || 'U'}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-white">{user?.nickname || '사용자'}</p>
+            {loading ? (
+              <div className="h-3 w-20 rounded bg-gray-700 animate-pulse" />
+            ) : (
+              <p className="truncate text-sm font-medium text-white">
+                {user?.nickname || '사용자'}
+              </p>
+            )}
           </div>
           <button
             onClick={handleLogout}

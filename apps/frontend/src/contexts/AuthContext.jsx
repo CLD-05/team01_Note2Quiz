@@ -1,14 +1,21 @@
-import { createContext, useContext, useState } from 'react';
-import { login as loginApi, logout as logoutApi } from '../api/authApi';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { login as loginApi, logout as logoutApi, authMe } from '../api/authApi';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    const nickname = localStorage.getItem('nickname');
-    return nickname ? { nickname } : null;
-  });
-  const [loading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    authMe()
+      .then((res) => setUser({ nickname: res.data.nickname }))
+      .catch(() => {
+        localStorage.removeItem('nickname');
+        setUser(null);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const login = async (credentials) => {
     const response = await loginApi(credentials);

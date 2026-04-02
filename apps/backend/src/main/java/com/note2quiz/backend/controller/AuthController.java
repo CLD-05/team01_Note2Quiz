@@ -15,10 +15,12 @@ import com.note2quiz.backend.config.JwtTokenProvider; // 추가
 import com.note2quiz.backend.dto.LoginRequest;
 import com.note2quiz.backend.dto.LoginResponse;
 import com.note2quiz.backend.dto.SignupRequest;
+import com.note2quiz.backend.repository.UserRepository;
 import com.note2quiz.backend.service.AuthService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,7 +28,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final AuthService authService;
-    private final JwtTokenProvider jwtTokenProvider; // 쿠키 생성을 위해 주입 추가
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
 
     // 1. 회원가입 (기존과 동일)
     @PostMapping("/signup")
@@ -63,9 +66,13 @@ public class AuthController {
                 .body("로그아웃 되었습니다.");
     }
 
-    // 4. 토큰 검증 테스트
+    // 4. 현재 로그인 유저 정보 반환
     @GetMapping("/me")
-    public String getMyInfo() {
-        return "당신은 인증된 사용자입니다!";
+    public ResponseEntity<Map<String, String>> getMyInfo() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        String nickname = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalStateException("인증된 사용자를 찾을 수 없습니다."))
+                .getNickname();
+        return ResponseEntity.ok(Map.of("nickname", nickname));
     }
 }

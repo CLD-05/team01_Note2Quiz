@@ -5,3 +5,5 @@ export const signup = (data) => client.post('/auth/signup', data);
 export const login = (data) => client.post('/auth/login', data);
 
 export const logout = () => client.post('/auth/logout');
+
+export const authMe = () => client.get('/auth/me');

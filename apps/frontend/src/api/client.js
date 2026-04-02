@@ -12,7 +12,7 @@ client.interceptors.response.use(
   (response) => response,
   (error) => {
     const isAuthEndpoint = error.config?.url?.startsWith('/auth/');
-    if (error.response?.status === 401 && !isAuthEndpoint) {
+    if ((error.response?.status === 401 || error.response?.status === 403) && !isAuthEndpoint) {
       window.location.href = '/signin';
     }
     return Promise.reject(error);
