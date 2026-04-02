@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getNotes, deleteNote } from '../api/noteApi';
+import axios from 'axios';
 
 export default function NotesPage() {
   const navigate = useNavigate();
@@ -11,15 +11,19 @@ export default function NotesPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // 1. 스프링 부트 서버 API 주소
+  const API_URL = "http://localhost:8080/api/notes";
+
   useEffect(() => {
     fetchNotes();
   }, []);
 
-  // 2. fetchNotes 수정
+  // 2. 노트 목록 불러오기 (wordCount, quizCount 포함된 데이터 수신!)
   const fetchNotes = async () => {
     try {
       setIsLoading(true);
-      const response = await getNotes();
+      // 🚨 403 에러 방지를 위해 토큰(쿠키) 전송 옵션 필수!
+      const response = await axios.get(API_URL, { withCredentials: true });
       setNotes(response.data);
     } catch (error) {
       console.error("데이터 로딩 실패:", error);
@@ -27,9 +31,16 @@ export default function NotesPage() {
       setIsLoading(false);
     }
   };
+
+  // 3. 선택된 노트 다중 삭제 로직
   const handleDeleteConfirm = async () => {
     try {
-      await Promise.all(selectedIds.map(id => deleteNote(id)));
+      // 🚨 삭제 요청 시에도 권한(토큰)이 필요하므로 옵션 추가
+      await Promise.all(
+        selectedIds.map(id => axios.delete(`${API_URL}/${id}`, { withCredentials: true }))
+      );
+      
+      // 화면에서 삭제된 노트 필터링
       setNotes(notes.filter(note => !selectedIds.includes(note.id)));
       setSelectedIds([]);
       setShowDeleteModal(false);
@@ -54,6 +65,7 @@ export default function NotesPage() {
     note.title && note.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // 💡 삭제 모달에서 보여줄 '삭제될 총 퀴즈 개수' 계산 (백엔드 데이터 연동)
   const totalSelectedQuizzes = notes
     .filter(note => selectedIds.includes(note.id))
     .reduce((sum, note) => sum + (note.quizCount || 0), 0);
@@ -152,9 +164,11 @@ export default function NotesPage() {
                       
                       <div className="flex items-center gap-2 mb-4">
                         <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md">
+                          {/* 💡 백엔드에서 받아온 wordCount 적용! */}
                           {note.wordCount?.toLocaleString() || 0}자
                         </span>
                         <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+                          {/* 💡 백엔드에서 받아온 quizCount 적용! */}
                           {note.quizCount || 0}문제
                         </span>
                       </div>
