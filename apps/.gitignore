@@ -8,6 +8,7 @@
 application-secret.yml
 application-secret.properties
 application-dev.yml
+!application-local.example.yml
 
 # =========================
 # 2. Frontend (React / Node.js)
