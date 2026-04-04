@@ -1,0 +1,245 @@
+<html lang="ko" vid="0">
+  <head vid="1">
+    <meta charset="UTF-8" vid="2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3" />
+    <title vid="4">AWS Quiz with Hint</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin=""
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+      vid="6"
+    />
+    <style vid="7">
+      body {
+        font-family:
+          'Pretendard',
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui,
+          Roboto,
+          'Helvetica Neue',
+          'Segoe UI',
+          'Apple SD Gothic Neo',
+          'Noto Sans KR',
+          'Malgun Gothic',
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol',
+          sans-serif;
+        background-color: #f8fafc;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen w-full flex items-center justify-center p-4 md:p-8" vid="8">
+    <main
+      class="w-full max-w-[800px] bg-white rounded-[24px] shadow-sm border border-slate-200/60 p-8 md:p-12"
+      vid="9"
+    >
+      <div
+        class="inline-flex items-center justify-center px-3 py-1.5 rounded-md bg-blue-50 text-blue-600 text-sm font-semibold tracking-wide mb-6"
+        vid="10"
+      >
+        객관식
+      </div>
+
+      <h1
+        class="text-[22px] md:text-[26px] font-bold text-slate-900 leading-[1.5] mb-8 break-keep"
+        vid="11"
+      >
+        Q3. AWS Well-Architected 6대 관점 중, 장애가 발생하더라도 서비스가 지속될 수 있도록 복구
+        계획을 수립하고 설계하는 기준은 무엇인가?
+      </h1>
+
+      <div class="mb-10 flex flex-col items-start" vid="12">
+        <button
+          id="hint-toggle-btn"
+          class="group flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-100"
+          aria-expanded="false"
+          vid="13"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fill="currentColor"
+            viewBox="0 0 256 256"
+            class="text-slate-500 group-hover:text-amber-500 transition-colors"
+            vid="14"
+          >
+            <path
+              d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"
+              vid="15"
+            ></path>
+          </svg>
+          <span
+            class="text-[14px] font-medium text-slate-600 group-hover:text-slate-900 transition-colors"
+            vid="16"
+            >힌트 보기</span
+          >
+          <svg
+            id="hint-chevron"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 256 256"
+            class="text-slate-400 transition-transform duration-300 ml-1"
+            vid="17"
+          >
+            <path
+              d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"
+              vid="18"
+            ></path>
+          </svg>
+        </button>
+
+        <div
+          id="hint-content"
+          class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out w-full opacity-0"
+          vid="19"
+        >
+          <div class="overflow-hidden" vid="20">
+            <div
+              class="mt-3 p-5 rounded-xl bg-amber-50/50 border border-amber-100 flex gap-3"
+              vid="21"
+            >
+              <div class="mt-0.5 text-amber-500 shrink-0" vid="22">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  viewBox="0 0 256 256"
+                  vid="23"
+                >
+                  <path
+                    d="M240,128a112,112,0,1,1-112-112A112.12,112.12,0,0,1,240,128Zm-112-72a16,16,0,1,0,16,16A16,16,0,0,0,128,56Zm24,112H136V120a8,8,0,0,0-8-8H112a8,8,0,0,0,0,16h8v40H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16Z"
+                    vid="24"
+                  ></path>
+                </svg>
+              </div>
+              <div vid="25">
+                <h4 class="text-sm font-bold text-amber-900 mb-1" vid="26">Tip</h4>
+                <p class="text-[15px] leading-relaxed text-amber-800/80 break-keep" vid="27">
+                  시스템이 중단 없이 작동하고 실패를 완화하거나 복구할 수 있는 능력을 의미하는
+                  원칙을 떠올려보세요. 영어로는 'Reliability'라고 합니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3.5" vid="28">
+        <label
+          class="group relative flex items-center p-5 md:px-6 md:py-5 bg-white border border-slate-200 rounded-2xl cursor-pointer hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-1 has-[:checked]:ring-blue-500"
+          vid="29"
+        >
+          <input type="radio" name="quiz_option" value="1" class="sr-only" vid="30" />
+          <div class="flex items-center gap-4 w-full" vid="31">
+            <span
+              class="text-lg font-bold text-slate-400 w-6 group-has-[:checked]:text-blue-600 transition-colors"
+              vid="32"
+              >1</span
+            >
+            <span
+              class="text-lg font-medium text-slate-700 group-has-[:checked]:text-slate-900 transition-colors"
+              vid="33"
+              >운영 우수성</span
+            >
+          </div>
+        </label>
+
+        <label
+          class="group relative flex items-center p-5 md:px-6 md:py-5 bg-white border border-slate-200 rounded-2xl cursor-pointer hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-1 has-[:checked]:ring-blue-500"
+          vid="34"
+        >
+          <input type="radio" name="quiz_option" value="2" class="sr-only" vid="35" />
+          <div class="flex items-center gap-4 w-full" vid="36">
+            <span
+              class="text-lg font-bold text-slate-400 w-6 group-has-[:checked]:text-blue-600 transition-colors"
+              vid="37"
+              >2</span
+            >
+            <span
+              class="text-lg font-medium text-slate-700 group-has-[:checked]:text-slate-900 transition-colors"
+              vid="38"
+              >보안</span
+            >
+          </div>
+        </label>
+
+        <label
+          class="group relative flex items-center p-5 md:px-6 md:py-5 bg-white border border-slate-200 rounded-2xl cursor-pointer hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-1 has-[:checked]:ring-blue-500"
+          vid="39"
+        >
+          <input type="radio" name="quiz_option" value="3" class="sr-only" vid="40" />
+          <div class="flex items-center gap-4 w-full" vid="41">
+            <span
+              class="text-lg font-bold text-slate-400 w-6 group-has-[:checked]:text-blue-600 transition-colors"
+              vid="42"
+              >3</span
+            >
+            <span
+              class="text-lg font-medium text-slate-700 group-has-[:checked]:text-slate-900 transition-colors"
+              vid="43"
+              >안정성</span
+            >
+          </div>
+        </label>
+
+        <label
+          class="group relative flex items-center p-5 md:px-6 md:py-5 bg-white border border-slate-200 rounded-2xl cursor-pointer hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-1 has-[:checked]:ring-blue-500"
+          vid="44"
+        >
+          <input type="radio" name="quiz_option" value="4" class="sr-only" vid="45" />
+          <div class="flex items-center gap-4 w-full" vid="46">
+            <span
+              class="text-lg font-bold text-slate-400 w-6 group-has-[:checked]:text-blue-600 transition-colors"
+              vid="47"
+              >4</span
+            >
+            <span
+              class="text-lg font-medium text-slate-700 group-has-[:checked]:text-slate-900 transition-colors"
+              vid="48"
+              >성능 효율성</span
+            >
+          </div>
+        </label>
+      </div>
+    </main>
+
+    <script vid="49">
+      document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('hint-toggle-btn');
+        const content = document.getElementById('hint-content');
+        const chevron = document.getElementById('hint-chevron');
+        const btnText = toggleBtn.querySelector('span');
+        let isExpanded = false;
+
+        toggleBtn.addEventListener('click', () => {
+          isExpanded = !isExpanded;
+          toggleBtn.setAttribute('aria-expanded', isExpanded);
+
+          if (isExpanded) {
+            content.classList.remove('grid-rows-[0fr]', 'opacity-0');
+            content.classList.add('grid-rows-[1fr]', 'opacity-100');
+            chevron.classList.add('rotate-180');
+            btnText.textContent = '힌트 닫기';
+            toggleBtn.classList.add('bg-slate-50', 'border-slate-300');
+            toggleBtn.classList.remove('bg-white', 'border-slate-200');
+          } else {
+            content.classList.remove('grid-rows-[1fr]', 'opacity-100');
+            content.classList.add('grid-rows-[0fr]', 'opacity-0');
+            chevron.classList.remove('rotate-180');
+            btnText.textContent = '힌트 보기';
+            toggleBtn.classList.remove('bg-slate-50', 'border-slate-300');
+            toggleBtn.classList.add('bg-white', 'border-slate-200');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

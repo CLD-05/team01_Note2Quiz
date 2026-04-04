@@ -1,0 +1,586 @@
+<html lang="ko" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">AI Quiz Generator - Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet" vid="5">
+    <style vid="6">
+        :root {
+            --bg-sidebar: #131315;
+            --bg-sidebar-hover: #1E1E22;
+            --bg-main: #FAFAFA;
+            --bg-card: #FFFFFF;
+            --bg-input: #FFFFFF;
+            --bg-input-focus: #FFFFFF;
+            
+            --accent-blue: #2D68FF;
+            --accent-blue-hover: #1A55ED;
+            --accent-blue-light: #EAF2FF;
+            
+            --text-dark-primary: #111111;
+            --text-dark-secondary: #71717A;
+            --text-dark-tertiary: #A1A1AA;
+            
+            --text-light-primary: #FFFFFF;
+            --text-light-secondary: #A1A1AA;
+            
+            --border-light: #E4E4E7;
+            --border-dark: #27272A;
+            
+            --grid-color: rgba(228, 228, 231, 0.4);
+
+            --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --shadow-glow: 0 0 20px rgba(45, 104, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-main);
+            color: var(--text-dark-primary);
+            min-height: 100vh;
+            display: flex;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .split-layout {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            flex: 1.1;
+            background-color: var(--bg-sidebar);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 3rem 4rem;
+            color: var(--text-light-primary);
+            overflow: hidden;
+            border-right: 1px solid var(--border-dark);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(45,104,255,0.08) 0%, rgba(19,19,21,0) 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            letter-spacing: -0.01em;
+            margin-bottom: auto;
+            z-index: 10;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-blue);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.1) inset;
+        }
+
+        .hero-content {
+            max-width: 520px;
+            z-index: 10;
+            margin-bottom: 4rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-sidebar-hover);
+            border: 1px solid var(--border-dark);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-light-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-blue);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--text-light-secondary);
+            font-weight: 400;
+            max-width: 90%;
+        }
+
+        .illustration-container {
+            position: relative;
+            height: 320px;
+            margin-bottom: auto;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .ill-note {
+            width: 200px;
+            height: 260px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transform: perspective(1000px) rotateY(15deg) translateZ(-20px);
+            box-shadow: 20px 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .ill-line {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+        .ill-line:nth-child(1) { width: 40%; height: 12px; margin-bottom: 24px; background: rgba(255, 255, 255, 0.2); }
+        .ill-line:nth-child(2) { width: 90%; }
+        .ill-line:nth-child(3) { width: 80%; }
+        .ill-line:nth-child(4) { width: 95%; }
+        .ill-line:nth-child(5) { width: 60%; }
+
+        .ill-process {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 0 32px;
+            position: relative;
+        }
+
+        .ill-process-line {
+            position: absolute;
+            top: 50%;
+            left: -100px;
+            right: -100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(45, 104, 255, 0.5), transparent);
+            z-index: -1;
+            transform: translateY(-50%);
+        }
+
+        .ill-ai-node {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-sidebar);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-glow);
+            z-index: 2;
+        }
+
+        .ill-cards {
+            position: relative;
+            width: 220px;
+            height: 160px;
+            transform: perspective(1000px) rotateY(-10deg) translateZ(20px);
+        }
+
+        .ill-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease;
+        }
+
+        .ill-card:nth-child(1) { transform: translate(15px, 15px) rotate(4deg); opacity: 0.8; z-index: 1; }
+        .ill-card:nth-child(2) { transform: translate(5px, 5px) rotate(2deg); opacity: 0.9; z-index: 2; }
+        .ill-card:nth-child(3) { transform: translate(0, 0); z-index: 3; display: flex; flex-direction: column; }
+
+        .ill-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .ill-card-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-blue-light);
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ill-card-title {
+            color: var(--text-dark-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .ill-card-q {
+            color: var(--text-dark-secondary);
+            font-size: 0.75rem;
+            background: var(--bg-main);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px dashed var(--border-light);
+            margin-bottom: auto;
+        }
+
+        .form-section {
+            flex: 0.9;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-main);
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 24px 24px;
+            padding: 2rem 0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-blue);
+        }
+
+        .login-header {
+            padding: 32px 32px 24px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .login-form {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-dark-primary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            color: var(--text-dark-tertiary);
+            pointer-events: none;
+            width: 18px;
+            height: 18px;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 44px;
+            padding: 0 16px 0 40px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: 0.9375rem;
+            color: var(--text-dark-primary);
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-dark-tertiary);
+        }
+
+        .form-input:hover {
+            border-color: #D4D4D8;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(45, 104, 255, 0.15);
+            background-color: var(--bg-input-focus);
+        }
+
+        .form-input:focus + .input-icon,
+        .input-wrapper:focus-within .input-icon {
+            color: var(--accent-blue);
+        }
+
+        .btn-primary {
+            height: 44px;
+            width: 100%;
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-blue-hover);
+        }
+
+        .login-footer {
+            padding: 24px 32px;
+            background-color: var(--bg-main);
+            border-top: 1px solid var(--border-light);
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-dark-secondary);
+        }
+
+        .login-footer a {
+            color: var(--text-dark-primary);
+            font-weight: 500;
+            text-decoration: none;
+            margin-left: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .login-footer a:hover {
+            color: var(--accent-blue);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+
+    </style>
+</head>
+<body vid="7">
+
+    <div class="split-layout" vid="8">
+        
+        <div class="hero-section" vid="9">
+            <div class="brand-logo animate-up" vid="10">
+                <div class="logo-icon" vid="11">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vid="12">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" vid="13"></path>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" vid="14"></path>
+                    </svg>
+                </div>
+                Note2Quiz
+            </div>
+
+            <div class="illustration-container animate-up delay-1" vid="15">
+                <div class="ill-note" vid="16">
+                    <div class="ill-line" vid="17"></div>
+                    <div class="ill-line" vid="18"></div>
+                    <div class="ill-line" vid="19"></div>
+                    <div class="ill-line" vid="20"></div>
+                    <div class="ill-line" vid="21"></div>
+                </div>
+
+                <div class="ill-process" vid="22">
+                    <div class="ill-process-line" vid="23"></div>
+                    <div class="ill-ai-node" vid="24">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="25">
+                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" vid="26"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="ill-cards" vid="27">
+                    <div class="ill-card" vid="28"></div>
+                    <div class="ill-card" vid="29"></div>
+                    <div class="ill-card" vid="30">
+                        <div class="ill-card-header" vid="31">
+                            <div class="ill-card-icon" vid="32">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vid="33"><polyline points="20 6 9 17 4 12" vid="34"></polyline></svg>
+                            </div>
+                            <span class="ill-card-title" vid="35">Concept Review</span>
+                        </div>
+                        <div class="ill-card-q" vid="36">Q. Explain the primary difference between...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-content animate-up delay-2" vid="37">
+                <div class="hero-badge" vid="38">
+                    <div class="hero-badge-dot" vid="39"></div>
+                    AI 퀴즈 생성 엔진 v2.0
+                </div>
+                <h1 class="hero-title" vid="40">학습 노트를 붙여넣으면,<br vid="41">AI가 퀴즈를 만들어드립니다</h1>
+                <p class="hero-subtitle" vid="42">수업 내용을 복습하는 가장 빠른 방법. 긴 텍스트, PDF, 이미지 필기를 입력하고 즉시 플래시카드 형태의 퀴즈로 변환하여 학습 효율을 극대화하세요.</p>
+            </div>
+        </div>
+
+        
+        <div class="form-section" vid="43">
+            <div class="login-container animate-up delay-1" vid="44">
+                <div class="login-card" vid="45">
+                    <div class="login-header" vid="46">
+                        <h2 class="login-title" vid="47">회원가입</h2>
+                    </div>
+                    
+                    <form class="login-form" onsubmit="event.preventDefault();" vid="48">
+                        <div class="form-group" vid="49">
+                            <label class="form-label" for="name" vid="50">닉네임</label>
+                            <div class="input-wrapper" vid="51">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="52">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" vid="53"></path>
+                                    <circle cx="12" cy="7" r="4" vid="54"></circle>
+                                </svg>
+                                <input type="text" id="name" class="form-input" placeholder="닉네임을 입력하세요" required="" vid="55">
+                            </div>
+                        </div>
+
+                        <div class="form-group" vid="56">
+                            <label class="form-label" for="email" vid="57">이메일</label>
+                            <div class="input-wrapper" vid="58">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="59">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" vid="60"></path>
+                                    <polyline points="22,6 12,13 2,6" vid="61"></polyline>
+                                </svg>
+                                <input type="email" id="email" class="form-input" placeholder="이메일을 입력하세요" required="" vid="62">
+                            </div>
+                        </div>
+
+                        <div class="form-group" vid="63">
+                            <label class="form-label" for="password" vid="64">비밀번호</label>
+                            <div class="input-wrapper" vid="65">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="66">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" vid="67"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" vid="68"></path>
+                                </svg>
+                                <input type="password" id="password" class="form-input" placeholder="비밀번호를 입력하세요" required="" vid="69">
+                            </div>
+                        </div>
+
+                        <div class="form-group" vid="70">
+                            <label class="form-label" for="password_confirm" vid="71">비밀번호 확인</label>
+                            <div class="input-wrapper" vid="72">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="73">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" vid="74"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" vid="75"></path>
+                                </svg>
+                                <input type="password" id="password_confirm" class="form-input" placeholder="비밀번호를 다시 입력하세요" required="" vid="76">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" vid="77">
+                            가입하기
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="78">
+                                <line x1="5" y1="12" x2="19" y2="12" vid="79"></line>
+                                <polyline points="12 5 19 12 12 19" vid="80"></polyline>
+                            </svg>
+                        </button>
+                    </form>
+
+                    <div class="login-footer" vid="81">
+                        이미 계정이 있으신가요? <a href="#" vid="82">로그인</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body></html>

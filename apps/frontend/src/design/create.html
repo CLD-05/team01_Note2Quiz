@@ -1,0 +1,328 @@
+<html lang="ko" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Note2Quiz - 대시보드</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" vid="6">
+    <style vid="7">
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+        
+        
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+    <script vid="8">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2D68FF',
+                        primary_hover: '#2054DB',
+                        sidebar: '#111827',
+                        sidebar_hover: '#1F2937',
+                        bg_light: '#F8FAFC',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="w-screen h-screen flex bg-bg_light overflow-hidden text-slate-800" vid="9">
+
+    
+    <aside class="w-[260px] bg-sidebar flex flex-col shrink-0 text-slate-300 shadow-xl z-20" vid="10">
+        
+        <div class="h-20 flex items-center px-6 gap-3 shrink-0" vid="11">
+            <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white shrink-0 shadow-lg shadow-primary/30" vid="12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vid="13">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" vid="14"></path>
+                </svg>
+            </div>
+            <span class="text-white font-bold text-xl tracking-wide" vid="15">Note2Quiz</span>
+        </div>
+
+        
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto" vid="16">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-sidebar_hover text-white rounded-xl font-medium transition-colors" vid="17">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary" vid="18">
+                    <rect width="7" height="9" x="3" y="3" rx="1" vid="19"></rect>
+                    <rect width="7" height="5" x="14" y="3" rx="1" vid="20"></rect>
+                    <rect width="7" height="9" x="14" y="12" rx="1" vid="21"></rect>
+                    <rect width="7" height="5" x="3" y="16" rx="1" vid="22"></rect>
+                </svg>
+                Create
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-sidebar_hover hover:text-white rounded-xl font-medium transition-colors group" vid="23">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:text-slate-300 transition-colors" vid="24">
+                    <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" vid="25"></path>
+                </svg>
+                Notes
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-sidebar_hover hover:text-white rounded-xl font-medium transition-colors group" vid="26">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:text-slate-300 transition-colors" vid="27">
+                    <circle cx="12" cy="12" r="10" vid="28"></circle>
+                    <path d="M12 16v-4" vid="29"></path>
+                    <path d="M12 8h.01" vid="30"></path>
+                </svg>
+                Quizzes
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-sidebar_hover hover:text-white rounded-xl font-medium transition-colors group" vid="31">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:text-slate-300 transition-colors" vid="32">
+                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0-.73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" vid="33"></path>
+                    <circle cx="12" cy="12" r="3" vid="34"></circle>
+                </svg>
+                Settings
+            </a>
+        </nav>
+    </aside>
+
+    
+    <main class="flex-1 flex flex-col min-w-0" vid="35">
+        
+        
+        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-10 shrink-0 shadow-sm z-10" vid="36">
+            
+            <div vid="37">
+                <h2 class="text-xl font-bold text-slate-800 tracking-tight" vid="38">Dashboard</h2>
+            </div>
+        </header>
+
+        
+        <div class="flex-1 overflow-y-auto px-10 py-10" vid="39">
+            <div class="max-w-[1200px] mx-auto space-y-12" vid="40">
+                
+                
+                <section vid="41">
+                    <div class="flex items-center gap-3 mb-5" vid="42">
+                        <div class="p-2 bg-blue-50 rounded-lg text-primary" vid="43">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="44">
+                                <path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z" vid="45"></path>
+                                <path d="m14 7 3 3" vid="46"></path>
+                                <path d="M5 6v4" vid="47"></path>
+                                <path d="M19 14v4" vid="48"></path>
+                                <path d="M10 2v2" vid="49"></path>
+                                <path d="M7 8H3" vid="50"></path>
+                                <path d="M21 16h-4" vid="51"></path>
+                                <path d="M11 3H9" vid="52"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-2xl font-bold text-slate-900" vid="53">새 퀴즈 만들기</h1>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 transition-shadow hover:shadow-md" vid="54">
+                        
+                        <textarea class="w-full h-[280px] resize-none bg-slate-50 border border-slate-200 rounded-xl p-5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-base leading-relaxed" placeholder="학습 노트를 여기에 붙여넣으세요..." vid="55"></textarea>
+                        
+                        
+                        <div class="flex flex-col sm:flex-row items-end sm:items-center justify-between mt-4 gap-4" vid="56">
+                            
+                            <div class="text-sm text-slate-500 flex items-center gap-2" vid="57">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="58">
+                                    <circle cx="12" cy="12" r="10" vid="59"></circle>
+                                    <path d="M12 16v-4" vid="60"></path>
+                                    <path d="M12 8h.01" vid="61"></path>
+                                </svg>
+                                텍스트 분량이 많을수록 더 정확한 퀴즈가 생성됩니다.
+                            </div>
+
+                            <div class="flex items-center gap-6 w-full sm:w-auto justify-end" vid="62">
+                                
+                                <span class="text-sm font-medium text-slate-400 shrink-0" vid="63">0 / 10,000자</span>
+                                
+                                
+                                <button class="w-full sm:w-auto bg-primary hover:bg-primary_hover text-white px-8 py-3.5 rounded-xl font-bold text-base flex items-center justify-center gap-2.5 transition-all shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5 shrink-0" vid="64">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vid="65">
+                                        <path d="m22 2-7 20-4-9-9-4Z" vid="66"></path>
+                                        <path d="M22 2 11 13" vid="67"></path>
+                                    </svg>
+                                    퀴즈 생성하기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                
+                <section vid="68">
+                    <div class="flex items-center justify-between mb-6" vid="69">
+                        <div class="flex items-center gap-3" vid="70">
+                            <div class="w-1 h-6 bg-primary rounded-full" vid="71"></div>
+                            <h2 class="text-xl font-bold text-slate-900" vid="72">최근 퀴즈</h2>
+                        </div>
+                        <button class="text-sm font-semibold text-primary hover:text-primary_hover hover:underline flex items-center gap-1" vid="73">
+                            전체보기
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="74">
+                                <path d="m9 18 6-6-6-6" vid="75"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" vid="76">
+                        
+                        
+                        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all cursor-pointer group flex flex-col h-[210px] relative overflow-hidden" vid="77">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-primary opacity-0 group-hover:opacity-100 transition-opacity" vid="78"></div>
+                            
+                            <h3 class="text-lg font-bold text-slate-800 line-clamp-2 leading-snug group-hover:text-primary transition-colors mb-3" vid="79">
+                                Docker 컨테이너 기초
+                            </h3>
+                            
+                            <div class="flex flex-col gap-2 mt-auto mb-4" vid="80">
+                                <div class="flex items-center gap-2 text-sm font-medium text-slate-500" vid="81">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400" vid="82">
+                                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" vid="83"></rect>
+                                        <line x1="16" x2="16" y1="2" y2="6" vid="84"></line>
+                                        <line x1="8" x2="8" y1="2" y2="6" vid="85"></line>
+                                        <line x1="3" x2="21" y1="10" y2="10" vid="86"></line>
+                                    </svg>
+                                    2026.03.28
+                                </div>
+                                <div class="flex items-center gap-2 text-sm font-medium text-slate-500" vid="87">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400" vid="88">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" vid="89"></path>
+                                        <polyline points="14 2 14 8 20 8" vid="90"></polyline>
+                                        <line x1="16" x2="8" y1="13" y2="13" vid="91"></line>
+                                        <line x1="16" x2="8" y1="17" y2="17" vid="92"></line>
+                                        <polyline points="10 9 9 9 8 9" vid="93"></polyline>
+                                    </svg>
+                                    10문제
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-100" vid="94">
+                                <span class="px-2.5 py-1 bg-blue-50 text-blue-600 rounded-md text-xs font-bold tracking-wide" vid="95">객관식</span>
+                                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-md text-xs font-bold tracking-wide" vid="96">O/X</span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all cursor-pointer group flex flex-col h-[210px] relative overflow-hidden" vid="97">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-primary opacity-0 group-hover:opacity-100 transition-opacity" vid="98"></div>
+                            
+                            <h3 class="text-lg font-bold text-slate-800 line-clamp-2 leading-snug group-hover:text-primary transition-colors mb-3" vid="99">
+                                AWS EC2 인스턴스 관리
+                            </h3>
+                            
+                            <div class="flex flex-col gap-2 mt-auto mb-4" vid="100">
+                                <div class="flex items-center gap-2 text-sm font-medium text-slate-500" vid="101">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400" vid="102">
+                                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" vid="103"></rect>
+                                        <line x1="16" x2="16" y1="2" y2="6" vid="104"></line>
+                                        <line x1="8" x2="8" y1="2" y2="6" vid="105"></line>
+                                        <line x1="3" x2="21" y1="10" y2="10" vid="106"></line>
+                                    </svg>
+                                    2026.03.27
+                                </div>
+                                <div class="flex items-center gap-2 text-sm font-medium text-slate-500" vid="107">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400" vid="108">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" vid="109"></path>
+                                        <polyline points="14 2 14 8 20 8" vid="110"></polyline>
+                                        <line x1="16" x2="8" y1="13" y2="13" vid="111"></line>
+                                        <line x1="16" x2="8" y1="17" y2="17" vid="112"></line>
+                                        <polyline points="10 9 9 9 8 9" vid="113"></polyline>
+                                    </svg>
+                                    15문제
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-100" vid="114">
+                                <span class="px-2.5 py-1 bg-blue-50 text-blue-600 rounded-md text-xs font-bold tracking-wide" vid="115">객관식</span>
+                                <span class="px-2.5 py-1 bg-purple-50 text-purple-600 rounded-md text-xs font-bold tracking-wide" vid="116">주관식</span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all cursor-pointer group flex flex-col h-[210px] relative overflow-hidden" vid="117">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-primary opacity-0 group-hover:opacity-100 transition-opacity" vid="118"></div>
+                            
+                            <h3 class="text-lg font-bold text-slate-800 line-clamp-2 leading-snug group-hover:text-primary transition-colors mb-3" vid="119">
+                                Git 브랜치 전략
+                            </h3>
+                            
+                            <div class="flex flex-col gap-2 mt-auto mb-4" vid="120">
+                                <div class="flex items-center gap-2 text-sm font-medium text-slate-500" vid="121">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400" vid="122">
+                                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" vid="123"></rect>
+                                        <line x1="16" x2="16" y1="2" y2="6" vid="124"></line>
+                                        <line x1="8" x2="8" y1="2" y2="6" vid="125"></line>
+                                        <line x1="3" x2="21" y1="10" y2="10" vid="126"></line>
+                                    </svg>
+                                    2026.03.25
+                                </div>
+                                <div class="flex items-center gap-2 text-sm font-medium text-slate-500" vid="127">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400" vid="128">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" vid="129"></path>
+                                        <polyline points="14 2 14 8 20 8" vid="130"></polyline>
+                                        <line x1="16" x2="8" y1="13" y2="13" vid="131"></line>
+                                        <line x1="16" x2="8" y1="17" y2="17" vid="132"></line>
+                                        <polyline points="10 9 9 9 8 9" vid="133"></polyline>
+                                    </svg>
+                                    8문제
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-100" vid="134">
+                                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-md text-xs font-bold tracking-wide" vid="135">O/X</span>
+                                <span class="px-2.5 py-1 bg-purple-50 text-purple-600 rounded-md text-xs font-bold tracking-wide" vid="136">주관식</span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:border-primary/40 transition-all cursor-pointer group flex flex-col h-[210px] relative overflow-hidden" vid="137">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-primary opacity-0 group-hover:opacity-100 transition-opacity" vid="138"></div>
+                            
+                            <h3 class="text-lg font-bold text-slate-800 line-clamp-2 leading-snug group-hover:text-primary transition-colors mb-3" vid="139">
+                                JavaScript Promise 개념
+                            </h3>
+                            
+                            <div class="flex flex-col gap-2 mt-auto mb-4" vid="140">
+                                <div class="flex items-center gap-2 text-sm font-medium text-slate-500" vid="141">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400" vid="142">
+                                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" vid="143"></rect>
+                                        <line x1="16" x2="16" y1="2" y2="6" vid="144"></line>
+                                        <line x1="8" x2="8" y1="2" y2="6" vid="145"></line>
+                                        <line x1="3" x2="21" y1="10" y2="10" vid="146"></line>
+                                    </svg>
+                                    2026.03.20
+                                </div>
+                                <div class="flex items-center gap-2 text-sm font-medium text-slate-500" vid="147">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400" vid="148">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" vid="149"></path>
+                                        <polyline points="14 2 14 8 20 8" vid="150"></polyline>
+                                        <line x1="16" x2="8" y1="13" y2="13" vid="151"></line>
+                                        <line x1="16" x2="8" y1="17" y2="17" vid="152"></line>
+                                        <polyline points="10 9 9 9 8 9" vid="153"></polyline>
+                                    </svg>
+                                    12문제
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-100" vid="154">
+                                <span class="px-2.5 py-1 bg-blue-50 text-blue-600 rounded-md text-xs font-bold tracking-wide" vid="155">객관식</span>
+                                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-md text-xs font-bold tracking-wide" vid="156">O/X</span>
+                                <span class="px-2.5 py-1 bg-purple-50 text-purple-600 rounded-md text-xs font-bold tracking-wide" vid="157">주관식</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                
+                
+                <div class="h-8" vid="158"></div>
+            </div>
+        </div>
+    </main>
+
+
+</body></html>

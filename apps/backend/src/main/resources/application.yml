@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: backend
+
+  profiles:
+    active: local
+
+  jackson:
+    property-naming-stratege:  LOWER_CAMEL_CASE
+    time-zone:  Asia/Seoul
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: 8080
+
+dialect: org.hibernate.dialect.MySQLDialect
