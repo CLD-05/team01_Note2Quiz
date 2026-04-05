@@ -108,12 +108,13 @@ erDiagram
 
     USER ||--o{ NOTE : "owns"
     USER ||--o{ QUIZ_SET : "owns"
-    NOTE ||--o{ QUIZ_SET : "has"
+    NOTE ||--|| QUIZ_SET : "has"
     QUIZ_SET ||--o{ QUIZ : "contains"
 ```
 
 > `options` 컬럼은 JSON 타입으로, 객관식 보기 배열을 저장합니다.
 > `answer`는 정답 보기의 인덱스(0-based)입니다.
+> NOTE ↔ QUIZ_SET 은 1:1 관계입니다. 퀴즈 생성 요청 시 Note와 QuizSet이 하나의 트랜잭션에서 동시에 생성되며, 기존 Note에 QuizSet을 추가하는 API는 존재하지 않습니다.
 
 ---
 
