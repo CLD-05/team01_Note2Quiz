@@ -45,7 +45,7 @@ export default function NoteDetailPage() {
 
   const rightSlot = (
     <button
-      onClick={() => navigate(`/quizzes/${noteId}`)}
+      onClick={() => navigate(`/quizzes/${note.quizSetId}`)}
       className="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-600 shadow-md active:scale-95 transition-all cursor-pointer flex items-center gap-2"
     >
       <i className="ph-bold ph-play-circle text-lg"></i>
