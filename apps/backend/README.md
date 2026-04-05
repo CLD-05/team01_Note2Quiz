@@ -6,19 +6,19 @@
 
 ## 기술 스택
 
-| 항목 | 버전 / 값 |
-|------|-----------|
-| Java | 17 |
-| Spring Boot | 3.5.13 |
-| Spring AI (Google GenAI) | 1.1.3 |
-| AI 모델 | Gemini 2.5 Flash |
-| Spring Data JPA | Spring Boot 관리 |
-| Spring Security | Spring Boot 관리 |
-| JJWT | 0.11.5 |
-| MySQL Connector/J | Spring Boot 관리 |
-| Lombok | Spring Boot 관리 |
-| 빌드 도구 | Maven (mvnw) |
-| 서버 포트 | 8080 |
+| 항목                     | 버전 / 값        |
+| ------------------------ | ---------------- |
+| Java                     | 17               |
+| Spring Boot              | 3.5.13           |
+| Spring AI (Google GenAI) | 1.1.3            |
+| AI 모델                  | Gemini 2.5 Flash |
+| Spring Data JPA          | Spring Boot 관리 |
+| Spring Security          | Spring Boot 관리 |
+| JJWT                     | 0.11.5           |
+| MySQL Connector/J        | Spring Boot 관리 |
+| Lombok                   | Spring Boot 관리 |
+| 빌드 도구                | Maven (mvnw)     |
+| 서버 포트                | 8080             |
 
 ---
 
@@ -124,18 +124,19 @@ erDiagram
 
 ### Auth
 
-| Method | Endpoint | Description | Auth 필요 |
-|--------|----------|-------------|-----------|
-| POST | `/api/auth/signup` | 회원가입 | N |
-| POST | `/api/auth/login` | 로그인 (쿠키 발급) | N |
-| POST | `/api/auth/logout` | 로그아웃 (쿠키 삭제) | N |
-| GET | `/api/auth/me` | 현재 로그인 유저 정보 조회 | Y |
+| Method | Endpoint           | Description                | Auth 필요 |
+| ------ | ------------------ | -------------------------- | --------- |
+| POST   | `/api/auth/signup` | 회원가입                   | N         |
+| POST   | `/api/auth/login`  | 로그인 (쿠키 발급)         | N         |
+| POST   | `/api/auth/logout` | 로그아웃 (쿠키 삭제)       | N         |
+| GET    | `/api/auth/me`     | 현재 로그인 유저 정보 조회 | Y         |
 
 ---
 
 #### POST `/api/auth/signup`
 
 **Request Body**
+
 ```json
 {
   "email": "user@example.com",
@@ -147,6 +148,7 @@ erDiagram
 > - `password`: 최소 8자 이상
 
 **Response** `200 OK`
+
 ```
 회원가입이 완료되었습니다.
 ```
@@ -156,6 +158,7 @@ erDiagram
 #### POST `/api/auth/login`
 
 **Request Body**
+
 ```json
 {
   "email": "user@example.com",
@@ -192,6 +195,7 @@ erDiagram
 #### GET `/api/auth/me`
 
 **Response** `200 OK`
+
 ```json
 {
   "nickname": "홍길동"
@@ -202,21 +206,23 @@ erDiagram
 
 ### Notes
 
-| Method | Endpoint | Description | Auth 필요 |
-|--------|----------|-------------|-----------|
-| GET | `/api/notes` | 내 노트 목록 조회 | Y |
-| GET | `/api/notes/{noteId}` | 노트 상세 조회 | Y |
-| DELETE | `/api/notes/{noteId}` | 노트 삭제 | Y |
+| Method | Endpoint              | Description       | Auth 필요 |
+| ------ | --------------------- | ----------------- | --------- |
+| GET    | `/api/notes`          | 내 노트 목록 조회 | Y         |
+| GET    | `/api/notes/{noteId}` | 노트 상세 조회    | Y         |
+| DELETE | `/api/notes/{noteId}` | 노트 삭제         | Y         |
 
 ---
 
 #### GET `/api/notes`
 
 **Response** `200 OK`
+
 ```json
 [
   {
     "id": 1,
+    "quizSetId": 1,
     "title": "운영체제 1강",
     "createdAt": "2024-01-01T10:00:00",
     "quizCount": 5,
@@ -233,9 +239,11 @@ erDiagram
 #### GET `/api/notes/{noteId}`
 
 **Response** `200 OK`
+
 ```json
 {
   "id": 1,
+  "quizSetId": 1,
   "title": "운영체제 1강",
   "content": "운영체제란 컴퓨터 하드웨어와 소프트웨어 사이의 인터페이스입니다...",
   "createdAt": "2024-01-01T10:00:00",
@@ -254,17 +262,18 @@ erDiagram
 
 ### Quiz Sets
 
-| Method | Endpoint | Description | Auth 필요 |
-|--------|----------|-------------|-----------|
-| POST | `/api/quiz-sets` | 노트 내용으로 퀴즈 세트 생성 (AI) | Y |
-| GET | `/api/quiz-sets` | 내 퀴즈 세트 목록 조회 | Y |
-| GET | `/api/quiz-sets/{quizSetId}` | 퀴즈 세트 상세 조회 | Y |
+| Method | Endpoint                     | Description                       | Auth 필요 |
+| ------ | ---------------------------- | --------------------------------- | --------- |
+| POST   | `/api/quiz-sets`             | 노트 내용으로 퀴즈 세트 생성 (AI) | Y         |
+| GET    | `/api/quiz-sets`             | 내 퀴즈 세트 목록 조회            | Y         |
+| GET    | `/api/quiz-sets/{quizSetId}` | 퀴즈 세트 상세 조회               | Y         |
 
 ---
 
 #### POST `/api/quiz-sets`
 
 **Request Body**
+
 ```json
 {
   "content": "운영체제란 컴퓨터 하드웨어와 소프트웨어 사이의 인터페이스입니다..."
@@ -272,6 +281,7 @@ erDiagram
 ```
 
 **Response** `200 OK`
+
 ```json
 {
   "quizSetId": 1,
@@ -287,6 +297,7 @@ erDiagram
 #### GET `/api/quiz-sets`
 
 **Response** `200 OK`
+
 ```json
 [
   {
@@ -303,6 +314,7 @@ erDiagram
 #### GET `/api/quiz-sets/{quizSetId}`
 
 **Response** `200 OK`
+
 ```json
 {
   "id": 1,
@@ -313,7 +325,12 @@ erDiagram
     {
       "id": 1,
       "question": "운영체제의 주요 역할은 무엇인가?",
-      "options": ["프로세스 관리", "메모리 관리", "파일 시스템 관리", "위 모두"],
+      "options": [
+        "프로세스 관리",
+        "메모리 관리",
+        "파일 시스템 관리",
+        "위 모두"
+      ],
       "answer": 3,
       "explanation": "운영체제는 프로세스, 메모리, 파일 시스템을 모두 관리합니다.",
       "tip": "운영체제의 4대 기능을 기억하세요."
@@ -333,10 +350,10 @@ erDiagram
 }
 ```
 
-| 상태 코드 | 원인 |
-|-----------|------|
-| 400 | `IllegalArgumentException` (잘못된 요청, 유효성 검사 실패 등) |
-| 500 | `RuntimeException` (서버 내부 오류) |
+| 상태 코드 | 원인                                                          |
+| --------- | ------------------------------------------------------------- |
+| 400       | `IllegalArgumentException` (잘못된 요청, 유효성 검사 실패 등) |
+| 500       | `RuntimeException` (서버 내부 오류)                           |
 
 ---
 
@@ -344,16 +361,16 @@ erDiagram
 
 `application-local.yml` (또는 운영 환경의 `.env`) 에서 아래 항목을 설정합니다.
 
-| 변수명 | 설명 | 예시값 |
-|--------|------|--------|
-| `JWT_SECRET` | JWT 서명 비밀키 (32바이트 이상) | `my-secret-key-must-be-at-least-32-bytes` |
-| `SPRING_DATASOURCE_URL` | MySQL JDBC URL | `jdbc:mysql://localhost:3306/note2quiz?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8` |
-| `SPRING_DATASOURCE_USERNAME` | DB 사용자명 | `scott` |
-| `SPRING_DATASOURCE_PASSWORD` | DB 비밀번호 | `tiger` |
-| `SPRING_DATASOURCE_DRIVER_CLASS_NAME` | JDBC 드라이버 클래스 | `com.mysql.cj.jdbc.Driver` |
-| `GEMINI_API_KEY` | Google Gemini API 키 | `AIzaSy...` |
-| `SPRING_AI_GOOGLE_GENAI_CHAT_OPTIONS_MODEL` | 사용할 Gemini 모델 | `gemini-2.5-flash` |
-| `SPRING_AI_GOOGLE_GENAI_CHAT_OPTIONS_TEMPERATURE` | 생성 온도 (0.0 ~ 1.0) | `0.7` |
+| 변수명                                            | 설명                            | 예시값                                                                                                                              |
+| ------------------------------------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `JWT_SECRET`                                      | JWT 서명 비밀키 (32바이트 이상) | `my-secret-key-must-be-at-least-32-bytes`                                                                                           |
+| `SPRING_DATASOURCE_URL`                           | MySQL JDBC URL                  | `jdbc:mysql://localhost:3306/note2quiz?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8` |
+| `SPRING_DATASOURCE_USERNAME`                      | DB 사용자명                     | `scott`                                                                                                                             |
+| `SPRING_DATASOURCE_PASSWORD`                      | DB 비밀번호                     | `tiger`                                                                                                                             |
+| `SPRING_DATASOURCE_DRIVER_CLASS_NAME`             | JDBC 드라이버 클래스            | `com.mysql.cj.jdbc.Driver`                                                                                                          |
+| `GEMINI_API_KEY`                                  | Google Gemini API 키            | `AIzaSy...`                                                                                                                         |
+| `SPRING_AI_GOOGLE_GENAI_CHAT_OPTIONS_MODEL`       | 사용할 Gemini 모델              | `gemini-2.5-flash`                                                                                                                  |
+| `SPRING_AI_GOOGLE_GENAI_CHAT_OPTIONS_TEMPERATURE` | 생성 온도 (0.0 ~ 1.0)           | `0.7`                                                                                                                               |
 
 ### `.env.example`
 

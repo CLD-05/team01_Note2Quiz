@@ -30,8 +30,9 @@ public class QuizGeneratorService {
                    - answer: 정답 번호 (1~4)
                    - explanation: 해설 문자열
                    - tip: 팁 문자열
-                7. 반드시 JSON만 출력한다.
-                8. 설명문, 코드블록 표시 ```json 같은 것 절대 붙이지 마라.
+                7. 반드시 순수한 JSON 텍스트만 출력한다.
+                8. 응답의 첫 글자는 반드시 '{' 이어야 하고, 마지막 글자는 반드시 '}' 이어야 한다.
+                9. ```json, ```, 마크다운, 설명문 등 JSON 외의 텍스트를 절대 포함하지 마라.
                 
                 출력 형식 예시:
                 {
@@ -60,13 +61,31 @@ public class QuizGeneratorService {
         return parseResponse(response);
     }
 
+    /**
+     * Gemini가 간헐적으로 JSON을 ```json ... ``` 마크다운 코드블록으로 감싸 반환하는 경우를 방어한다.
+     */
+    private String stripMarkdownCodeBlock(String response) {
+        String trimmed = response.trim();
+        if (trimmed.startsWith("```")) {
+            int firstNewline = trimmed.indexOf('\n');
+            if (firstNewline != -1) {
+                trimmed = trimmed.substring(firstNewline + 1).trim();
+            }
+            if (trimmed.endsWith("```")) {
+                trimmed = trimmed.substring(0, trimmed.lastIndexOf("```")).trim();
+            }
+        }
+        return trimmed;
+    }
+
     @SuppressWarnings("unchecked")
     private Map<String, Object> parseResponse(String response) {
         try {
             com.fasterxml.jackson.databind.ObjectMapper objectMapper =
                     new com.fasterxml.jackson.databind.ObjectMapper();
 
-            return objectMapper.readValue(response, Map.class);
+            String cleaned = stripMarkdownCodeBlock(response);
+            return objectMapper.readValue(cleaned, Map.class);
         } catch (Exception e) {
             throw new RuntimeException("AI 응답 JSON 파싱 실패: " + response, e);
         }
