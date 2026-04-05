@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class NoteResponse {
 
     private Long id;
+    private Long quizSetId;
     private String title;
     private String content;
     private LocalDateTime createdAt;
